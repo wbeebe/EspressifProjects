@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${HOME}/esp/esp-idf/components/esp_common/include",
+                "${HOME}/esp/esp-idf/components/driver/include",
+                "${HOME}/esp/esp-idf/components/esp_hw_support/include",
+                "${HOME}/esp/esp-idf/components/esp_ringbuf/include",
+                "${HOME}/esp/esp-idf/components/freertos/include",
+                "${HOME}/esp/esp-idf/components/freertos/include/esp_additions/freertos",
+                "${HOME}/esp/esp-idf/components/soc/esp32c3/include",
+                "${HOME}/esp/esp-idf/components/soc/include",
+                "${HOME}/esp/esp-idf/components/hal/include",
+                "${HOME}/esp/esp-idf/components/esp_rom/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang++",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}
