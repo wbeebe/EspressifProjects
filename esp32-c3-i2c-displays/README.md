@@ -7,23 +7,19 @@ attached via the I2C buss.
 See the RMT examples in the [RMT Peripheral](../../peripherals/rmt) for more 
 information about how to use it.
 
-## How to Use Example
-
-Before project configuration and build, be sure to set the correct chip target 
-using `idf.py set-target esp32c3`.
+## How to Use This Example
 
 ### Hardware Required
 
-* A development board with ESP32/ESP32-S2/ESP32-S3/ESP32-C3 SoC (e.g., 
-ESP32-DevKitC, ESP-WROVER-KIT, etc.)
-* A USB cable for Power supply and programming
+* A development board with an ESP32-C3 SoC, such as the ESP-C2-DevKitC-02 v1.1
+* A USB cable for power and programming.
 
 Some development boards use an addressable LED instead of a regular one. These
 development boards include:
 
 | Board                | LED type             | Pin                  |
 | -------------------- | -------------------- | -------------------- |
-| ESP32-C3-DevKitC-1   | Addressable          | GPIO8                |
+| ESP32-C3-DevKitC-02  | Addressable          | GPIO8                |
 | ESP32-C3-DevKitM-1   | Addressable          | GPIO8                |
 
 See [Development Boards](https://www.espressif.com/en/products/devkits) for 
@@ -31,7 +27,9 @@ more information about it.
 
 ### Configure the Project
 
-Open the project configuration menu (`idf.py menuconfig`). 
+First set the correct chip target using `idf.py set-target esp32c3`.
+
+Open the project configuration menu with `idf.py menuconfig`.
 
 In the `Example Configuration` menu:
 
@@ -129,6 +127,5 @@ The pixel number indicates the pixel position in the LED strip. For a single
 LED, use 0.
 
 ## Troubleshooting
-
 * If the LED isn't blinking, check the GPIO or the LED type selection in the 
 `Example Configuration` menu.
