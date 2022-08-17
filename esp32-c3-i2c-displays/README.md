@@ -67,12 +67,17 @@ for full steps to configure and use ESP-IDF to build projects.
 
 As you run the application you will see the LED blinking, according to the 
 previously defined period. You will also see the LED displays displaying
-numberic information. Please read the source file main.cpp for further details.
+numeric information. Please read the source file main.cpp for further details.
 
 For the addressable LED you can change the LED color by setting the values 
 `pStrip_a->set_pixel(pStrip_a, 0, 16, 16, 16);` 
 (LED Strip, Pixel Number, Red, Green, Blue) with values from 0 to 255 in the 
 `main.cpp` file.
+
+Note: The LED color order is red, blue, green, cyan, magenta, yellow, and black.
+
+The pixel number indicates the pixel position in the LED strip. For a single 
+LED, use 0.
 
 ```
 mode:DIO, clock div:1
@@ -136,11 +141,6 @@ I (2802) LED_DISPLAY: Alphanumeric initialized.
 I (9802) LED_DISPLAY: Alphanumeric testing finished.
 I (9802) LED_DISPLAY: Start cycling NeoPixel colors.
 ```
-
-Note: The color order is red, blue, green, cyan, magenta, yellow, and black.
-
-The pixel number indicates the pixel position in the LED strip. For a single 
-LED, use 0.
 
 ## Troubleshooting
 * If the LED isn't blinking, check the GPIO or the LED type selection in the 
