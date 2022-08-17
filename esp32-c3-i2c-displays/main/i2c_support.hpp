@@ -10,8 +10,8 @@
 
 #include "driver/i2c.h"
 
-const uint8_t I2C_MASTER_TX_BUF_DISABLE = 0; /*!< I2C master doesn't need buffer */
-const uint8_t I2C_MASTER_RX_BUF_DISABLE = 0; /*!< I2C master doesn't need buffer */
+const uint8_t I2C_MASTER_TX_BUF_DISABLE = 0; // I2C master doesn't need buffer
+const uint8_t I2C_MASTER_RX_BUF_DISABLE = 0; // I2C master doesn't need buffer
 const uint8_t ACK_CHECK_EN = 0x1;
 const TickType_t I2C_TICKS_TO_WAIT = (500 / portTICK_RATE_MS);
 
@@ -33,15 +33,15 @@ class Device {
      */
     virtual esp_err_t initialize() = 0;
 
-    /* Reset the device to a known state. For displays this means setting the display
-       to a known state, such as blank or off. It is read to be used. This should always
-       be called after initialize().
+    /* Reset the device to a known state. For displays this means setting the
+       display to a known state, such as blank or off. It is read to be used.
+       This should always be called after initialize().
      */
     virtual esp_err_t reset() = 0;
 
-    /* A simple test for the device. For displays this means turning on LEDs in a known
-       pattern. This should be called after a call to reset(). After test() you should
-       call reset() again.
+    /* A simple test for the device. For displays this means turning on LEDs in
+       a known pattern. This should be called after a call to reset().
+       After test() you should call reset() again.
      */
     virtual esp_err_t test() = 0;
 };
