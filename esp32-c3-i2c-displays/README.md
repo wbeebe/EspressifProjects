@@ -1,29 +1,43 @@
-# LED Display Example
-This example demonstrates how to blink an LED using GPIO or RMT for the
-addressable LED, i.e. [WS2812](http://www.world-semi.com/Certifications/WS2812B.html).
-It also shows how to address a series of Adafruit seven segment I2C displays
-attached via the I2C buss.
+# On-board LED and I2C Display Application
+This application uses and ESP32-C3 development board and demonstrates:
+* how to blink an LED using GPIO or RMT for the addressable LED,
+i.e. [WS2812](http://www.world-semi.com/Certifications/WS2812B.html), and
+* how to address Adafruit LED I2C displays attached via the I2C buss.
 
-See the RMT examples in the [RMT Peripheral](../../peripherals/rmt) for more 
-information about how to use it.
-
-## How to Use This Example
-
+## How to Use This Application
 ### Hardware Required
 
 * A development board with an ESP32-C3 SoC, such as the ESP-C2-DevKitC-02 v1.1
+* One or more Adafruit LED displays driven by the HT16K33 LED controller/driver
 * A USB cable for power and programming.
 
 Some development boards use an addressable LED instead of a regular one. These
 development boards include:
 
-| Board                | LED type             | Pin                  |
-| -------------------- | -------------------- | -------------------- |
-| ESP32-C3-DevKitC-02  | Addressable          | GPIO8                |
-| ESP32-C3-DevKitM-1   | Addressable          | GPIO8                |
+| Board                | LED type             | Pin     |
+| -------------------- | -------------------- | ------- |
+| ESP32-C3-DevKitC-02* | Addressable          | GPIO8   |
+| ESP32-C3-DevKitM-1   | Addressable          | GPIO8   |
+
+\*This version used.
 
 See [Development Boards](https://www.espressif.com/en/products/devkits) for 
 more information about it.
+
+The following physical pins are used on the ESP32-C3-DevKitC-02 V1.1 for I2C
+| Physical Pin | Pin   | I2C function |
+| -------------|-------|--------------|
+| 5            | GPIO5 | SDA          |
+| 6            | GPIO6 | SCL          |
+
+For power, pin 1 is ground and pin 2 is +5V out.
+
+The following Adafruit HT16K33-driven displays are used in this application.
+| Part                          | Link                                  | I2C Address |
+|-------------------------------|---------------------------------------|------|
+| 0.54" Quad Alphanumeric - Red | https://www.adafruit.com/product/3130 | 0x70 |
+| 0.8" 8x16 LED Matrix - Red    | https://www.adafruit.com/product/3152 | 0x72 |
+| 0.8" 8x16 LED Matrix - Yellow | https://www.adafruit.com/product/3153 | 0x73 |
 
 ### Configure the Project
 
@@ -51,9 +65,11 @@ for full steps to configure and use ESP-IDF to build projects.
 
 ## Example Output
 
-As you run the example, you will see the LED blinking, according to the 
-previously defined period.
-For the addressable LED, you can also change the LED color by setting the 
+As you run the application you will see the LED blinking, according to the 
+previously defined period. You will also see the LED displays displaying
+numberic information. Please read the source file main.cpp for further details.
+
+For the addressable LED you can change the LED color by setting the values 
 `pStrip_a->set_pixel(pStrip_a, 0, 16, 16, 16);` 
 (LED Strip, Pixel Number, Red, Green, Blue) with values from 0 to 255 in the 
 `main.cpp` file.
