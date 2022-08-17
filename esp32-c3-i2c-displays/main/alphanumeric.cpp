@@ -1,4 +1,19 @@
+/* Adafruit 0.54" Quad Alphanumeric Display Support Code for ESP-IDF.
+   Part: https://www.adafruit.com/product/3130
+
+   This code is licensed under Apache Apache Version 2.0, January 2004
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+ */
 #include "alphanumeric.hpp"
+
+/* The bit patterns for the Adafruit 0.54" Quad Alphanumeric FeatherWing
+   Display - Red
+   Note that this will work with any of the displays. The red color version was
+   used and tested.
+ */
 
 static const uint16_t ascii_table[] = {
     0x0000, // SPACE

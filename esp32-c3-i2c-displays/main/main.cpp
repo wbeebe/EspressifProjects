@@ -1,6 +1,6 @@
-/* ESP32-C3-WROOM-02/ESP32-C3-DevKitC-02 v1.1 Expanded Blink Example
+/* ESP32-C3-WROOM-02/ESP32-C3-DevKitC-02 V1.1
 
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
+   This code is licensed under Apache Apache Version 2.0, January 2004
 
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR

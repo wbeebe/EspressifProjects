@@ -1,3 +1,11 @@
+/* HT16K33 Support Code for ESP-IDF.
+
+   This code is licensed under Apache Apache Version 2.0, January 2004
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+ */
 #include "ht16k33.hpp"
 
 esp_err_t ht16k33_initialize(uint8_t device_address) {

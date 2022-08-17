@@ -1,3 +1,11 @@
+/* ESP32 I2C Support Code for ESP-IDF.
+
+   This code is licensed under Apache Apache Version 2.0, January 2004
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+ */
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
@@ -29,6 +37,10 @@ esp_err_t write_data(uint8_t device_address, uint8_t *data, uint8_t length) {
     return i2c_master_write_to_device(0, device_address, data, length, I2C_TICKS_TO_WAIT);
 }
 
+/* This utility prints an output nearly identical to 'i2cget -y 0'.
+   It was modified from code originally supplied in the Espressif ESP-IDF
+   example i2c_tools.
+ */
 void i2c_scan() {
     static i2c_cmd_handle_t cmd;
     static esp_err_t ret;

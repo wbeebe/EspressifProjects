@@ -1,3 +1,12 @@
+/* Adafruit 0.54" Quad Alphanumeric Display Support Code for ESP-IDF.
+   Part: https://www.adafruit.com/product/3130
+
+   This code is licensed under Apache Apache Version 2.0, January 2004
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+ */
 #pragma once
 #include "ht16k33.hpp"
 
