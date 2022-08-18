@@ -4,5 +4,6 @@ idf_component_register(SRCS "main.cpp"
                             "vt52_rom.cpp"
                             "matrix8by16.cpp"
                             "alphanumeric.cpp"
+                            "Adafruit_BNO055.cpp"
 
                             INCLUDE_DIRS ".")

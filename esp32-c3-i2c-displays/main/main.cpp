@@ -20,15 +20,14 @@
 #include "ht16k33.hpp"
 #include "matrix8by16.hpp"
 #include "alphanumeric.hpp"
-//#include "Adafruit_BNO055.hpp"
+#include "Adafruit_BNO055.hpp"
 
 static const char *TAG = "LED_DISPLAY";
 
 AlphaNumeric alnum = AlphaNumeric(0x70);
 Matrix8by16 m816 = Matrix8by16(0x72);
 Matrix8by16 m816_2 = Matrix8by16(0x73);
-//Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
-//Adafruit_BNO055 bno055 = Adafruit_BNO055(0x4B);
+Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
 
 uint16_t counter = 0;
 
@@ -127,7 +126,7 @@ static void test_8x16_glyphs() {
     m816_2.display(1,ForwardSlash);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
 }
-/*
+
 static void check_bno055() {
     if (bno055.begin()) {
         ESP_LOGI(TAG, "BNO055 started.");
@@ -149,7 +148,6 @@ static void check_bno055() {
         ESP_LOGI(TAG, "BNO055 failed to start.");
     }
 }
-*/
 
 extern "C" void app_main(void) {
     ESP_LOGI(TAG, "Configure LED.");
@@ -164,7 +162,7 @@ extern "C" void app_main(void) {
         ESP_LOGI(TAG, "Scan for I2C devices.");
         i2c_scan();
 
-        // check_bno055();
+        check_bno055();
 
         auto an_status = m816.initialize();
         auto an_status_2 = m816_2.initialize();
