@@ -11,7 +11,7 @@ These are the current releases as of August 2022.
 
 Each project has a README describing in greater specific detail what it is 
 and what MCU and developer board it targets.
-### ESP32-C3-I2C-DISPLAYS
+## ESP32-C3-I2C-Displays
 A project derived from an ESP-IDF LED flasher example that was extended as
 an I2C learning laboratory.
 
@@ -25,3 +25,12 @@ ESP32-C3-DevKitC-02 v1.1
 (https://docs.espressif.com/projects/esp-idf/en/v4.4.2/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html).
 A key feature of this development board is its use of RISC-V executing at
 160MHz (https://riscv.org).
+## Dual-Blink
+Another project dervied from an ESP-IDF LED flasher example. Except in this
+application tasking is used to control the blinking of two LEDs. The RGB LED
+is in one task, and an external LED attached to pin GPIO46 is in another.
+## Simple-WebServer
+A project that is written in MicroPython and is meant to run with version
+1.19.1 or greater. It acts as a simple access point and will present a single
+web page at IP address 192.168.1.2. That web page can control the on-board
+RGB LED.
