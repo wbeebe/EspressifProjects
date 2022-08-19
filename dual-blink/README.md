@@ -1,7 +1,7 @@
 # Dual Blink Application
 
-This application demonstrates how to blink two LEDs, one using using GPIO and 
-the other using RMT for the on-board addressable LED, i.e. 
+This application demonstrates how to blink two LEDs, one using an external GPIO
+and the other using the on-board RMT for the on-board addressable LED, i.e. 
 [WS2812](http://www.world-semi.com/Certifications/WS2812B.html).
 
 ## How to Use This Application
@@ -13,11 +13,11 @@ using `idf.py set-target <chip_name>`. In this application it should be `esp32s3
 
 * A development board with an ESP32-S3 SoC (e.g., ESP32-S3-DevKitC)
 * An LED and a single 2.2K resister
-    * Connect the LED and resister in series, with the resister connected to ground and the LED anode (round side of LED) connected to GPIO46 (pin 46).
+    * Connect the LED and resister in series, with the resister connected to ground and the LED anode (round side of the LED) connected to GPIO46 (pin 46).
 * A USB cable for power and programming
 
-Some development boards use an addressable LED instead of a regular one.
-These development boards include:
+Some development boards use an addressable LED.
+The development board used in this application:
 
 | Board                | LED type             | Pin                  |
 | -------------------- | -------------------- | -------------------- |
