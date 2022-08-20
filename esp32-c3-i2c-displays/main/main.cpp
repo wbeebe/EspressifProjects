@@ -1,6 +1,6 @@
 /* ESP32-C3-WROOM-02/ESP32-C3-DevKitC-02 V1.1
 
-   This code is licensed under Apache Apache Version 2.0, January 2004
+   This code is licensed under Apache Version 2.0, January 2004
 
    Unless required by applicable law or agreed to in writing, this
    software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
