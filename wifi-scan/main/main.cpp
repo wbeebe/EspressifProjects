@@ -41,9 +41,10 @@ static void wifi_scan() {
     ESP_ERROR_CHECK(esp_wifi_scan_get_ap_records(&DEFAULT_SCAN_LIST_SIZE, ap_info));
     ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&ap_count));
 
-    ESP_LOGI(TAG, "Total Wifi Access Pointss scanned: %u\n", ap_count);
+    ESP_LOGI(TAG, "Total Wifi Access Points Found: %u\n", ap_count);
 
     for (int i = 0; (i < DEFAULT_SCAN_LIST_SIZE) && (i < ap_count); i++) {
+        ESP_LOGI(TAG, "%15s: %d", "Number", i + 1);
         ESP_LOGI(TAG, "%15s: %s", "SSID", ap_info[i].ssid);
         ESP_LOGI(TAG, "%15s: %d", "RSSI", ap_info[i].rssi);
         ESP_LOGI(TAG, "%15s: %s", "Authmod", decode_wifi_auth_mode(ap_info[i].authmode));

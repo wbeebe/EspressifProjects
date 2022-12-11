@@ -71,13 +71,21 @@ I (480) wifi_init: WiFi RX IRAM OP enabled
 I (490) phy_init: phy_version 503,13653eb,Jun  1 2022,17:47:08
 I (530) wifi:mode : sta (7c:df:a1:e3:5f:50)
 I (530) wifi:enable tsf
-I (3030) WIFI SCAN: Total Wifi Access Pointss scanned: 18
+I (3033) WIFI SCAN: Total Wifi Access Points Found: 16
 
-I (3030) WIFI SCAN:            SSID: ESP32S3_5554
-I (3030) WIFI SCAN:            RSSI: -46
-I (3030) WIFI SCAN:         Authmod: WIFI_AUTH_OPEN
-I (3040) WIFI SCAN: Pairwise Cipher: WIFI_CIPHER_TYPE_NONE
-I (3040) WIFI SCAN:    Group Cipher: WIFI_CIPHER_TYPE_NONE
-I (3050) WIFI SCAN:         Channel: 1
+I (3033) WIFI SCAN:          Number: 1
+I (3033) WIFI SCAN:            SSID: ESP32S3_5554
+I (3033) WIFI SCAN:            RSSI: -44
+I (3043) WIFI SCAN:         Authmod: WIFI_AUTH_OPEN
+I (3043) WIFI SCAN: Pairwise Cipher: WIFI_CIPHER_TYPE_NONE
+I (3053) WIFI SCAN:    Group Cipher: WIFI_CIPHER_TYPE_NONE
+I (3053) WIFI SCAN:         Channel: 1
 ...
+I (3583) WIFI SCAN:          Number: 16
+I (3583) WIFI SCAN:            SSID: ATTMXtpFA2
+I (3593) WIFI SCAN:            RSSI: -90
+I (3593) WIFI SCAN:         Authmod: WIFI_AUTH_WPA2_PSK
+I (3603) WIFI SCAN: Pairwise Cipher: WIFI_CIPHER_TYPE_CCMP
+I (3603) WIFI SCAN:    Group Cipher: WIFI_CIPHER_TYPE_CCMP
+I (3613) WIFI SCAN:         Channel: 6
 ```
