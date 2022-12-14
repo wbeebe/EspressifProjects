@@ -24,6 +24,8 @@ The project still uses the RGB LED as well as four I2C Adafruit devices:
 The project specifically targets an ESP32-C3 development board, the ESP32-C3-DevKitC-02 v1.1 (https://docs.espressif.com/projects/esp-idf/en/v4.4.2/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html).
 
 A key feature of this development board is its use of RISC-V executing at 160MHz (https://riscv.org).
+## ESP32-S3-N32R8
+A basic blink project used to try to enble full flash and PSRAM enablement. This is available in v5 (ESP-IDF V5) only. The maximum amount of flash that can be enabled with this board and ESP-IDF V5 is 16 MB. PSRAM is enable. The on-board LED is via GPIO pin 38.
 ## Dual-Blink
 Another project dervied from an ESP-IDF LED flasher example. Except in this application tasking is used to control the blinking of two LEDs. The RGB LED is in one task, and an external LED attached to pin GPIO46 is in another.
 ## Simple-WebServer

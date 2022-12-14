@@ -4,11 +4,11 @@ This application demonstrates how to blink two LEDs, one using an external GPIO 
 
 ## How to Use This Application
 
-Before project configuration and build, be sure to set the correct chip target using `idf.py set-target <chip_name>`. In this application it should be `esp32s3`.
+Before project configuration and build, be sure to set the correct chip target using `idf.py set-target esp32s3`.
 
 ## Hardware Required
 
-* A development board with an ESP32-S3 SoC (e.g., ESP32-S3-DevKitC-1-N8R8)
+* The ESP32-S3-DevKitC-1-N8R8 development board.
 * An LED and a single 2.2K resister
     * Connect the LED and resister in series, with the resister connected to ground and the LED anode (round side of the LED) connected to GPIO46 (pin 46).
 * A USB cable for power and programming
@@ -25,9 +25,9 @@ for more information about it.
 
 ## Configuration
 
-The ESP32-S3-DevKitC-1-N8R8 comes with an ESP32-S3-WROOM-1 SOC, 8 GB (N8) of flash and 8 GB (R8) of external RAM. We’re going to configure some of the properties of the devkit to tell the software tool chain how much flash is present, and to enable the use of the external RAM. To do this we’re going to use `idf.py menuconfig`.
+The ESP32-S3-DevKitC-1-N8R8 comes with an ESP32-S3-WROOM-1 SOC, 8 MB (N8) of flash and 8 MB (R8) of external RAM. We’re going to configure some of the properties of the devkit to tell the software tool chain how much flash is present, and to enable the use of the external RAM. To do this we’re going to use `idf.py menuconfig`.
 
-Set the amount of flash from the default of 2 GB to 8 GB. 
+Set the amount of flash from the default of 2 MB to 8 MB. 
 1. At the top-level of menuconfig select Serial flasher config; 
     - select Flash size (2 MB);
     - move down to 8 MB and select it, then return to the top of menuconfig.
@@ -53,7 +53,7 @@ See the [Getting Started Guide](https://docs.espressif.com/projects/esp-idf/en/l
 
 ## Example Output
 
-As you run the example, you will see the LED blinking, according to the previously defined period. For the addressable LED, you can also change the LED color by setting the `pStrip_a->set_pixel(pStrip_a, 0, 16, 16, 16);` (LED Strip, Pixel Number, Red, Green, Blue) with values from 0 to 255 in the `blink.c` file.
+As you run the application you will see both LEDs blinking, according to their previously defined periods.
 
 ```
 Hard resetting via RTS pin...
