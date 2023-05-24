@@ -19,7 +19,10 @@ static string _page_heading;
 //
 void build_page_heading(const string &SSID) {
     _page_heading =
-"<!DOCTYPE html><html><head>"
+"<!DOCTYPE html>"
+"<html>"
+"<head>"
+"<meta http-equiv=\"Content-type\" content=\"text/html;charset=utf-8\">"
 "<title>" + SSID + "</title>"
 "<style>"
 "body {font-family: sans-serif;margin: 20px;}"
@@ -97,8 +100,9 @@ string &home_button(string action) {
     + _footer;
     return _home_button;
 }
-
-
+//
+//
+//
 esp_err_t send_root_web_page(httpd_req_t *req) {
     httpd_resp_send_chunk(req, _webpage.c_str(), HTTPD_RESP_USE_STRLEN);
     httpd_resp_send_chunk(req, get_footer().c_str(), HTTPD_RESP_USE_STRLEN);
@@ -142,52 +146,59 @@ esp_err_t set_cycle(httpd_req_t *req) {
 //
 //
 //
+static httpd_uri_t uri_favicon = {
+    .uri = "/favicon.ico",
+    .method = HTTP_GET,
+    .handler = send_favicon,
+    .user_ctx = NULL
+};
+
+static httpd_uri_t uri_root = {
+    .uri = "/",
+    .method = HTTP_GET,
+    .handler = send_root_web_page,
+    .user_ctx = NULL
+};
+
+static httpd_uri_t uri_red = {
+    .uri = "/red",
+    .method = HTTP_GET,
+    .handler = set_red,
+    .user_ctx = NULL
+};
+
+static httpd_uri_t uri_green = {
+    .uri = "/green",
+    .method = HTTP_GET,
+    .handler = set_green,
+    .user_ctx = NULL
+};
+
+static httpd_uri_t uri_blue = {
+    .uri = "/blue",
+    .method = HTTP_GET,
+    .handler = set_blue,
+    .user_ctx = NULL
+};
+
+static httpd_uri_t uri_off = {
+    .uri = "/off",
+    .method = HTTP_GET,
+    .handler = set_off,
+    .user_ctx = NULL};
+
+static httpd_uri_t uri_cycle = {
+    .uri = "/cycle",
+    .method = HTTP_GET,
+    .handler = set_cycle,
+    .user_ctx = NULL
+};
+//
+//
+//
 httpd_handle_t initialize_webserver(const string &SSID) {
     build_page_heading(SSID);
     build_main_webpage();
-
-    httpd_uri_t uri_get = {
-        .uri = "/",
-        .method = HTTP_GET,
-        .handler = send_root_web_page,
-        .user_ctx = NULL};
-
-    httpd_uri_t uri_favicon = {
-        .uri = "/favicon.ico",
-        .method = HTTP_GET,
-        .handler = send_favicon,
-        .user_ctx = NULL};
-
-    httpd_uri_t uri_red = {
-        .uri = "/red",
-        .method = HTTP_GET,
-        .handler = set_red,
-        .user_ctx = NULL};
-
-    httpd_uri_t uri_green = {
-        .uri = "/green",
-        .method = HTTP_GET,
-        .handler = set_green,
-        .user_ctx = NULL};
-
-    httpd_uri_t uri_blue = {
-        .uri = "/blue",
-        .method = HTTP_GET,
-        .handler = set_blue,
-        .user_ctx = NULL};
-
-    httpd_uri_t uri_off = {
-        .uri = "/off",
-        .method = HTTP_GET,
-        .handler = set_off,
-        .user_ctx = NULL};
-
-    httpd_uri_t uri_cycle = {
-        .uri = "/cycle",
-        .method = HTTP_GET,
-        .handler = set_cycle,
-        .user_ctx = NULL};
-
     httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
@@ -195,8 +206,8 @@ httpd_handle_t initialize_webserver(const string &SSID) {
     if (httpd_start(&server, &config) == ESP_OK) {
         // Start the HTTP server.
         ESP_LOGI(TAG, "STARTING WEB SERVER SUCCESSFUL");
-        httpd_register_uri_handler(server, &uri_get);
         httpd_register_uri_handler(server, &uri_favicon);
+        httpd_register_uri_handler(server, &uri_root);
         httpd_register_uri_handler(server, &uri_red);
         httpd_register_uri_handler(server, &uri_green);
         httpd_register_uri_handler(server, &uri_blue);
@@ -205,6 +216,7 @@ httpd_handle_t initialize_webserver(const string &SSID) {
     }
     else {
         ESP_LOGI(TAG, "STARTING WEB SERVER FAILED");
+        server = NULL;
     }
 
     return server;

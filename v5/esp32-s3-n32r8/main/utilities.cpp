@@ -23,7 +23,7 @@ static struct tm timeinfo;
 const char *get_time_now() {
     time(&now);
     localtime_r(&now, &timeinfo);
-    strftime(strftime_buf, sizeof(strftime_buf), "%c %Z", &timeinfo);
+    strftime(strftime_buf, sizeof(strftime_buf), "%a %e %b %Y %r %Z", &timeinfo);
     return strftime_buf;
 }
 
