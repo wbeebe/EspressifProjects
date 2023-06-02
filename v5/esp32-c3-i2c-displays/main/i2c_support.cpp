@@ -4,7 +4,7 @@
 #include "i2c_support.hpp"
 
 esp_err_t i2c_initialize(void) {
-    i2c_driver_install(0, I2C_MODE_MASTER, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0);
+    i2c_driver_install(I2C_NUM_0, I2C_MODE_MASTER, I2C_MASTER_RX_BUF_DISABLE, I2C_MASTER_TX_BUF_DISABLE, 0);
     i2c_config_t conf;
     conf.mode = I2C_MODE_MASTER;
     conf.sda_io_num = GPIO_NUM_5;
@@ -14,19 +14,19 @@ esp_err_t i2c_initialize(void) {
     conf.master.clk_speed = 800000;
     conf.clk_flags = I2C_SCLK_SRC_FLAG_FOR_NOMAL;
 
-    return i2c_param_config(0, &conf);
+    return i2c_param_config(I2C_NUM_0, &conf);
 }
 
 esp_err_t read_register(uint8_t device_address, uint8_t reg, uint8_t * buffer, uint8_t len) {
-    return i2c_master_write_read_device(0, device_address, &reg, 1, buffer, len, I2C_TICKS_TO_WAIT);
+    return i2c_master_write_read_device(I2C_NUM_0, device_address, &reg, 1, buffer, len, I2C_TICKS_TO_WAIT);
 }
 
 esp_err_t write_byte(uint8_t device_address, uint8_t command) {
-    return i2c_master_write_to_device(0, device_address, &command, 1, I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, &command, 1, I2C_TICKS_TO_WAIT);
 }
 
 esp_err_t write_data(uint8_t device_address, uint8_t *data, uint8_t length) {
-    return i2c_master_write_to_device(0, device_address, data, length, I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, data, length, I2C_TICKS_TO_WAIT);
 }
 
 void i2c_scan() {

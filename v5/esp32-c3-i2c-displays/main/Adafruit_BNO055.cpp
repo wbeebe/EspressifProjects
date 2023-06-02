@@ -76,7 +76,7 @@ bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t mode) {
   //
   vTaskDelay(1000 / portTICK_PERIOD_MS);
   uint8_t data[8] = {BNO055_CHIP_ID_ADDR};
-  auto ret = i2c_master_write_read_device(0, address, data, 1, data, 1, I2C_TICKS_TO_WAIT);
+  auto ret = i2c_master_write_read_device(I2C_NUM_0, address, data, 1, data, 1, I2C_TICKS_TO_WAIT);
 
   if (ret != ESP_OK or data[0] != BNO055_ID) {
     ESP_LOGI(TAG, "FAILED CHIP ID");
@@ -91,7 +91,7 @@ bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t mode) {
   //
   data[0] = BNO055_SYS_TRIGGER_ADDR, data[1] = 0x20;
 
-  if (i2c_master_write_to_device(0, address, data, 2, I2C_TICKS_TO_WAIT) != ESP_OK) {
+  if (i2c_master_write_to_device(I2C_NUM_0, address, data, 2, I2C_TICKS_TO_WAIT) != ESP_OK) {
     ESP_LOGI(TAG, "FAILED TO SOFTWARE RESET CHIP");
     return false;
   }
@@ -105,7 +105,7 @@ bool Adafruit_BNO055::begin(adafruit_bno055_opmode_t mode) {
   vTaskDelay(1000 / portTICK_PERIOD_MS);
 
   data[0] = BNO055_CHIP_ID_ADDR;
-  ret = i2c_master_write_read_device(0, address, data, 1, data, 1, I2C_TICKS_TO_WAIT);
+  ret = i2c_master_write_read_device(I2C_NUM_0, address, data, 1, data, 1, I2C_TICKS_TO_WAIT);
   ESP_LOGI(TAG,"CHECK TO SEE IF BNO055 COMES OUT OF SOFTWARE RESET");
 
   if (ret != ESP_OK or data[0] != BNO055_ID) {
@@ -813,7 +813,7 @@ bool Adafruit_BNO055::write8(adafruit_bno055_reg_t reg, uint8_t value) {
  */
 uint8_t Adafruit_BNO055::read8(adafruit_bno055_reg_t reg) {
   uint8_t buffer[1] = {reg};
-  i2c_master_write_read_device(0,address,buffer,1,buffer,1,1000 / portTICK_PERIOD_MS);
+  i2c_master_write_read_device(I2C_NUM_0,address,buffer,1,buffer,1,1000 / portTICK_PERIOD_MS);
   return buffer[0];
 }
 

@@ -14,14 +14,14 @@ esp_err_t Matrix8by16::initialize() {
 esp_err_t Matrix8by16::reset() {
     std::memset(buffer, 0, sizeof(buffer));
     // return write_data(device_address, buffer, sizeof(buffer));
-    return i2c_master_write_to_device(0, device_address, buffer, sizeof(buffer), (500 / portTICK_PERIOD_MS));
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, buffer, sizeof(buffer), (500 / portTICK_PERIOD_MS));
 }
 
 esp_err_t Matrix8by16::test() {
     std::memset(buffer, 0xFF, sizeof(buffer));
     buffer[0] = 0;
     // esp_err_t ret = write_data(device_address, buffer, sizeof(buffer));
-    esp_err_t ret = i2c_master_write_to_device(0, device_address, buffer, sizeof(buffer), (500 / portTICK_PERIOD_MS));
+    esp_err_t ret = i2c_master_write_to_device(I2C_NUM_0, device_address, buffer, sizeof(buffer), (500 / portTICK_PERIOD_MS));
     std::memset(buffer, 0x0, sizeof(buffer));
     return ret;
 }
@@ -45,7 +45,7 @@ esp_err_t Matrix8by16::display(const uint8_t digit, const uint8_t glyph[]) {
         di += 2;
     }
 
-    return i2c_master_write_to_device(0, device_address, buffer, sizeof(buffer), I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, buffer, sizeof(buffer), I2C_TICKS_TO_WAIT);
 }
 
 esp_err_t Matrix8by16::display(const uint8_t tens, const uint8_t ones) {
@@ -61,5 +61,5 @@ esp_err_t Matrix8by16::display(const uint8_t tens, const uint8_t ones) {
         di2 += 2;
     }
 
-    return i2c_master_write_to_device(0, device_address, buffer, sizeof(buffer), I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, buffer, sizeof(buffer), I2C_TICKS_TO_WAIT);
 }

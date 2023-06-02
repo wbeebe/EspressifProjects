@@ -112,12 +112,12 @@ esp_err_t AlphaNumeric::initialize() {
 
 esp_err_t AlphaNumeric::reset() {
     uint8_t all_data[] = {0,0,0,0,0,0,0,0,0};
-    return i2c_master_write_to_device(0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
 }
 
 esp_err_t AlphaNumeric::test() {
     uint8_t all_data[] = {0,0xff,0x7f,0xFF,0x7F,0xFF,0x7F,0xFF,0x7F};
-    return i2c_master_write_to_device(0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
 }
 
 esp_err_t AlphaNumeric::display(uint16_t number_to_display) {
@@ -139,7 +139,7 @@ esp_err_t AlphaNumeric::display(uint16_t number_to_display) {
     all_data[6] = (ascii_table[dig3] >> 8) & 0xff;
     all_data[7] = ascii_table[dig4] & 0xff;
     all_data[8] = (ascii_table[dig4] >> 8) & 0xff;
-    return i2c_master_write_to_device(0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
 }
 
 esp_err_t AlphaNumeric::display(uint8_t thou, uint8_t hund, uint8_t tens, uint8_t ones) {
@@ -153,6 +153,6 @@ esp_err_t AlphaNumeric::display(uint8_t thou, uint8_t hund, uint8_t tens, uint8_
     all_data[6] = (ascii_table[tens + ascii_table_numeric_start] >> 8) & 0xff;
     all_data[7] = ascii_table[ones + ascii_table_numeric_start] & 0xff;
     all_data[8] = (ascii_table[ones + ascii_table_numeric_start] >> 8) & 0xff;
-    return i2c_master_write_to_device(0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
+    return i2c_master_write_to_device(I2C_NUM_0, device_address, all_data, sizeof(all_data), I2C_TICKS_TO_WAIT);
 }
 

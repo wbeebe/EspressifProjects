@@ -1,14 +1,13 @@
 # Espressif Projects
 A collection of projects I've re/written over time for programming Espressif MCUs. Languages used are C/C++, MicroPython and CircuitPython.
 
-* For C/C++ programming I've used the ESP-IDF development tools v4.4.3 and v5
-(https://github.com/espressif/esp-idf) on Linux Mint 21.
-* For MicroPython I've used version 1.19.1 (https://github.com/micropython/micropython)
-* For CircuitPython I've used version 7.3.3 (https://circuitpython.org/downloads)
+* For C/C++ programming I've used the ESP-IDF development tools v4.4.4 and v5.2-dev (https://github.com/espressif/esp-idf) on Linux Mint 21.1 (Vera).
+* For MicroPython I've used version 1.20.0 (https://github.com/micropython/micropython)
+* For CircuitPython I've used version 8.1.0 (https://circuitpython.org/downloads)
 
-These projects are current as of December 2022.
+These projects are current as of June 2023.
 
-There are now two major ESP-IDF folders, v4 for ESP-IDF 4.x, and v5 for ESP-IDF v5.x. All new work is down the v5 branch. The v4 is left for historical purposes. The biggest fundamental feature on the v5 branch is the enabling of SPIRAM on those ESP32-S3 and ESP32-C3 development boards that have SPIRAM.
+There are now two major ESP-IDF folders, v4 for ESP-IDF 4.x, and v5 for ESP-IDF v5.x. All new work is on the v5 branch. The v4 is left for historical purposes. The biggest fundamental feature on the v5 branch is the enabling of SPIRAM on those ESP32-S3 development boards that have octal SPIRAM.
 
 NOTE: Only ESP-IDF projects are bifurcated down the two branches. All MicroPython and CircuitPython projects are at this level.
 
@@ -21,7 +20,7 @@ The project still uses the RGB LED as well as four I2C Adafruit devices:
 * a pair of LED matrix display boards
 * a BNO055 IMU
 
-The project specifically targets an ESP32-C3 development board, the ESP32-C3-DevKitC-02 v1.1 (https://docs.espressif.com/projects/esp-idf/en/v4.4.2/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html).
+The project specifically targets the ESP32-C3-DevKitC-02 v1.1 (https://docs.espressif.com/projects/esp-idf/en/v4.4.2/esp32c3/hw-reference/esp32c3/user-guide-devkitc-02.html).
 
 A key feature of this development board is its use of RISC-V executing at 160MHz (https://riscv.org).
 ## ESP32-S3-N32R8
@@ -31,8 +30,10 @@ Another project dervied from an ESP-IDF LED flasher example. Except in this appl
 ## Simple-WebServer
 A project that is written in MicroPython and is meant to run with version 1.19.1 or greater. It acts as a simple access point and will present a single web page at IP address 192.168.1.2. That web page can control the on-board RGB LED.
 ## WiFi-Scan
-A project that is a major re-write in C++. Part of the main.cpp source was spun out as two files (esp_wifi_support.hpp and .cpp) to correct the use of switch statements for converting several enumerations into strings and begin to make it reusable.
+An Espressif example project that is a major re-write in C++. Part of the main.cpp source was spun out as two files (esp_wifi_support.hpp and .cpp) to correct the use of switch statements for converting several enumerations into strings and begin to make it reusable. This project now compiles and runs on an ESP32-C6-DevKitC-1 v1.1 and v1.2.
 
-The output was cleaned up to replace the crude use of tabs with proper C/C++ print  statement formatting. See the projects README file for an output example.
-# Mastodon
+In particular the output was cleaned up to replace the crude use of tabs with proper C/C++ print  statement formatting. See the projects README file for an output example.
+## Colour_Blink
+A project written explicitly for the ESP32-C6-DevKitC-1. The code simply cycles continously through six different colours on the NeoPixel. If `idf.py` is connected to `monitor`, then every six seconds or so a single line of text will be emitted at the start of a colour cycle.
+# Mastodon Link
 <a rel="me" href="https://mastodon.cloud/@wbeebe">Mastodon</a>
