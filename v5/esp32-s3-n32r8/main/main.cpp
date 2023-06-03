@@ -74,9 +74,11 @@ extern "C" void app_main(void) {
     initialize_neopixel();
 
     ESP_LOGI(TAG, "INITIALIZE WIFI");
-    initialize_wifi(SSID.c_str());
-    ESP_LOGI(TAG, "INITIALIZE WEBSERVER");
-    initialize_webserver(SSID);
+
+    if (initialize_wifi(SSID.c_str()) == ESP_OK) {
+        ESP_LOGI(TAG, "INITIALIZE WEBSERVER");
+        initialize_webserver(SSID);
+    }
 
     ESP_LOGI(TAG, "ENTERING APP_MAIN LOOP");
 

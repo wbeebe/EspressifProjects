@@ -68,9 +68,8 @@ void wifi_event_handler (void *arg,
             case WIFI_EVENT_STA_DISCONNECTED:
                 ESP_LOGI(TAG, stringify(WIFI_EVENT_STA_DISCONNECTED));
                 if (connect_retry_count < MAXIMUM_RETRY_COUNT) {
-                    ESP_LOGI(TAG, "RECONNECT ATTEMPT %i", connect_retry_count);
+                    ESP_LOGI(TAG, "RECONNECT ATTEMPT %i", ++connect_retry_count);
                     esp_wifi_connect();
-                    connect_retry_count++;
                 }
                 else {
                     ESP_LOGI(TAG, "RECONNECT FAILURE");
@@ -269,7 +268,7 @@ void initialize_sntp() {
 //
 // Initialize WiFi.
 //
-void initialize_wifi(const char *SSID) {
+esp_err_t initialize_wifi(const char *SSID) {
     string _SSID{SSID};
     //
     // Required by WiFi driver.
@@ -362,6 +361,12 @@ void initialize_wifi(const char *SSID) {
     const char *host_msg = (ret == ESP_OK ? "SUCCESS" : "FAILURE");
     ESP_LOGI(TAG, "SET HOST NAME: %s", host_msg);
 
+    if (ret != ESP_OK) {
+        return ret;
+    }
+
+    ret = ESP_FAIL;
+
     EventBits_t bits = xEventGroupWaitBits(wifi_event_group,
         WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
         pdFALSE,
@@ -372,9 +377,12 @@ void initialize_wifi(const char *SSID) {
 
     ESP_LOGI(TAG, "INITIALIZE WIFI: CONNECTION %s", conn_msg);
 
-    initialize_sntp();
+    if (bits & WIFI_CONNECTED_BIT) {
+        initialize_sntp();
+    }
 
     ESP_LOGI(TAG, "INITIALIZE WIFI DONE");
+    return ret;
 }
 //
 // This is an experiment to create the ability for an ESP32-S3 to act as

@@ -5,4 +5,4 @@
 using std::string;
 #define stringify( _name ) #_name
 
-void initialize_wifi(const char *SSID);
+esp_err_t initialize_wifi(const char *SSID);
