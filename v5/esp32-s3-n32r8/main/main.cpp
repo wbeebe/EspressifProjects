@@ -79,6 +79,9 @@ extern "C" void app_main(void) {
         ESP_LOGI(TAG, "INITIALIZE WEBSERVER");
         initialize_webserver(SSID);
     }
+    else {
+        ESP_LOGI(TAG, "WEBSERVER NOT INITIALIZED");
+    }
 
     ESP_LOGI(TAG, "ENTERING APP_MAIN LOOP");
 

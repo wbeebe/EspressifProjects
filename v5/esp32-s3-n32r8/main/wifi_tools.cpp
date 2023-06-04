@@ -362,10 +362,8 @@ esp_err_t initialize_wifi(const char *SSID) {
     ESP_LOGI(TAG, "SET HOST NAME: %s", host_msg);
 
     if (ret != ESP_OK) {
-        return ret;
+        return ESP_FAIL;
     }
-
-    ret = ESP_FAIL;
 
     EventBits_t bits = xEventGroupWaitBits(wifi_event_group,
         WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
@@ -382,7 +380,7 @@ esp_err_t initialize_wifi(const char *SSID) {
     }
 
     ESP_LOGI(TAG, "INITIALIZE WIFI DONE");
-    return ret;
+    return ESP_OK;
 }
 //
 // This is an experiment to create the ability for an ESP32-S3 to act as
