@@ -1,4 +1,4 @@
-/* ESP32-C3-WROOM-02/ESP32-C3-DevKitC-02 v1.1 Expanded Blink Example
+/* ESP32-C3-WROOM-02/ESP32-C3-DevKitC-02 v1.1 Device Control Example
 
    This example code is in the Public Domain (or CC0 licensed, at your option.)
 
@@ -32,15 +32,15 @@ Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
 
 uint16_t counter{0};
 
-/* Sample clock. Counts one hour up to 59:59
-   then rolls over to 00:00.
- */
-uint8_t ones{0},
+// Sample clock. Counts one hour up to 59:59
+// then rolls over to 00:00.
+//
+int8_t ones{0},
     tens{0},
     hund{0},
     thou{0};
 
-static void clock_count(void) {
+static void clock_increment(void) {
     if (++ones > 9) { ones = 0;
         if (++tens > 5) { tens = 0;
             if (++hund > 9) { hund = 0;
@@ -51,9 +51,18 @@ static void clock_count(void) {
     }
 }
 
-/* Everything to support blinking the NeoPixel LED.
- */
+static void clock_decrement(void) {
+    if (--ones < 0) { ones = 9;
+        if (--tens < 0) { tens = 5;
+            if (--hund < 0) { hund = 9;
+                if (--thou < 0) { thou = 5;}
+            }
+        }
+    }
+}
 
+// Everything to support blinking the NeoPixel LED.
+//
 static led_strip_handle_t led_strip;
 static void initialize_neo_pixel(void) {
     // LED strip initialization with the GPIO and 1 NeoPixel.
@@ -71,8 +80,8 @@ static void initialize_neo_pixel(void) {
     led_strip_clear(led_strip);
 }
 
-/* Create an array of color arrays to cycle through continuously.
- */
+// Create an array of color arrays to cycle through continuously.
+//
 using std::array;
 const array<array<int, 3>, 7> colors {{
     {32,0,0},  // red
@@ -88,15 +97,12 @@ static void cycle_devices(void) {
     for(auto color : colors) {
         led_strip_set_pixel(led_strip, 0, color[0], color[1], color[2]);
         led_strip_refresh(led_strip);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
 
-        // Set NeoPixel LED dark by clearing all its individual LEDs.
-        led_strip_clear(led_strip);
-        vTaskDelay(500 / portTICK_PERIOD_MS);
-
+        clock_decrement();
         m816.display(thou, hund);
         m816_2.display(tens, ones);
-        clock_count();
+        //clock_increment();
         alnum.display(counter++);
     }
 }

@@ -44,5 +44,5 @@ class Matrix8by16 : Device {
 
         esp_err_t display(const uint8_t digit, const char character);
 
-        esp_err_t display(const uint8_t tens, const uint8_t ones);
+        esp_err_t display(const int8_t tens, const int8_t ones);
 };

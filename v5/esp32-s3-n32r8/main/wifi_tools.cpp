@@ -128,7 +128,8 @@ void wifi_event_handler (void *arg,
                 print_time();
                 break;
             case WIFI_EVENT_CONNECTIONLESS_MODULE_WAKE_INTERVAL_START:
-                ESP_LOGI(TAG, stringify(WIFI_EVENT_CONNECTIONLESS_MODULE_WAKE_INTERVAL_START));
+                ESP_LOGI(TAG,
+                    stringify(WIFI_EVENT_CONNECTIONLESS_MODULE_WAKE_INTERVAL_START));
                 break;
             case WIFI_EVENT_AP_WPS_RG_SUCCESS:
                 ESP_LOGI(TAG, stringify(WIFI_EVENT_AP_WPS_RG_SUCCESS));
@@ -189,8 +190,10 @@ void wifi_event_handler (void *arg,
     else if (event_base == IP_EVENT) {
         switch (event_id) {
             case IP_EVENT_STA_GOT_IP: {
-                ip_event_got_ip_t *evt = reinterpret_cast<ip_event_got_ip_t *>(event_data);
-                ESP_LOGI(TAG, stringify(IP_EVENT_STA_GOT_IP) ": " IPSTR, IP2STR(&evt->ip_info.ip));
+                ip_event_got_ip_t *evt =
+                    reinterpret_cast<ip_event_got_ip_t *>(event_data);
+                ESP_LOGI(TAG, stringify(IP_EVENT_STA_GOT_IP) ": " IPSTR,
+                    IP2STR(&evt->ip_info.ip));
                 connect_retry_count = 0;
                 xEventGroupSetBits(wifi_event_group, WIFI_CONNECTED_BIT);
             }
@@ -240,23 +243,11 @@ void wifi_event_handler (void *arg,
 // not have the esp_ prefix will emit deprecation warning errors.
 //
 void initialize_sntp() {
-    esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);    // thread safe
-    esp_sntp_setservername(0, "pool.ntp.org");      // thread safe
-    esp_sntp_init();                                // thread safe
+    esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG("pool.ntp.org");
+    esp_netif_sntp_init(&config);
 
-    int wait_count{0};
-    const int max_wait_count{11};
-
-    while(sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET and
-            ++wait_count < max_wait_count) {
-        ESP_LOGI(TAG, "WAIT FOR SNTP %d", wait_count);
-        //
-        // Why a five second wait? In my household currently live six cats.
-        // The cats have a Five Second Rule, where you may hold them for only
-        // five seconds before you must put them down.
-        // I felt five seconds here was reasonable.
-        //
-        vTaskDelay(5000/portTICK_PERIOD_MS);
+    if (esp_netif_sntp_sync_wait(pdMS_TO_TICKS(10000)) != ESP_OK) {
+        ESP_LOGI(TAG, "FAILED TO UPDATE SYSTEM TIME VIA NTP");
     }
 
     // Eastern Daylight Saving Time.
@@ -350,7 +341,8 @@ esp_err_t initialize_wifi(const char *SSID) {
     //ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &wifi_ap_config));
     wifi_config_t wifi_config;
     memcpy(wifi_config.sta.ssid, EXTERNAL_AP_SSID, strlen(EXTERNAL_AP_SSID)+1);
-    memcpy(wifi_config.sta.password, EXTERNAL_AP_PWD, strlen(EXTERNAL_AP_PWD)+1);
+    memcpy(wifi_config.sta.password, EXTERNAL_AP_PWD,
+        strlen(EXTERNAL_AP_PWD)+1);
     wifi_config.sta.pmf_cfg.required = false;
     wifi_config.sta.threshold.authmode = WIFI_AUTH_WPA2_PSK;
 
