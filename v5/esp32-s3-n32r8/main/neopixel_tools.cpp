@@ -63,8 +63,6 @@ void blink_neopixel() {
         led_strip_set_pixel(led_strip, 0, color[0], color[1], color[2]);
         led_strip_refresh(led_strip);
         vTaskDelay(400 / portTICK_PERIOD_MS);
-        led_strip_clear(led_strip);
-        vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
 

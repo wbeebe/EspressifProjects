@@ -46,6 +46,7 @@ void build_page_heading(const string &SSID) {
 "background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));}"
 "h1 {font-size: 300%; color: #D35F8D; text-align: center;}"
 "h2 {font-size: 250%; color: #5FA3D3; padding-left: 15px;}"
+"<link rel=\"icon\" href=\"data:,\">"
 "</style>"
 "</head><body>"
 "<h1>" + SSID + "</h1>"
@@ -79,8 +80,8 @@ void build_web_page_footer(string &footer) {
     //get_time_now();
     footer =
 "<hr/>"
-"<h2>Memory Free: " + heap_size + " bytes</h2>"
-"<h2>Flash Free: " + flash_size + " bytes</h2>"
+"<h2>Memory Free: " + heap_size + " bytes<br/>"
+"Flash Free: " + flash_size + " bytes</h2>"
 "<h2> " + get_time_now() + "</h2>"
 "</body></html>";
 }

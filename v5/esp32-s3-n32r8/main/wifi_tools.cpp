@@ -33,8 +33,8 @@ static EventGroupHandle_t wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
 
-const char *EXTERNAL_AP_SSID{"LOCAL_AP_SSID"};
-const char *EXTERNAL_AP_PWD{"LOCAL_AP_PASSWORD"};
+const char *EXTERNAL_AP_SSID{"g00gleeeyes"};
+const char *EXTERNAL_AP_PWD{"51538688"};
 
 static int connect_retry_count{0};
 const uint32_t MAXIMUM_RETRY_COUNT{10};
@@ -339,6 +339,8 @@ esp_err_t initialize_wifi(const char *SSID) {
     //
     //ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
     //ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &wifi_ap_config));
+    ESP_LOGI(TAG, "USING AP SSID: %s", EXTERNAL_AP_SSID);
+    ESP_LOGI(TAG, "USING AP PSWD: %s", EXTERNAL_AP_PWD);
     wifi_config_t wifi_config;
     memcpy(wifi_config.sta.ssid, EXTERNAL_AP_SSID, strlen(EXTERNAL_AP_SSID)+1);
     memcpy(wifi_config.sta.password, EXTERNAL_AP_PWD,
