@@ -40,6 +40,7 @@ int8_t ones{0},
     hund{0},
     thou{0};
 
+/*
 static void clock_increment(void) {
     if (++ones > 9) { ones = 0;
         if (++tens > 5) { tens = 0;
@@ -50,6 +51,7 @@ static void clock_increment(void) {
         }
     }
 }
+*/
 
 static void clock_decrement(void) {
     if (--ones < 0) { ones = 9;
@@ -65,14 +67,17 @@ static void clock_decrement(void) {
 //
 static led_strip_handle_t led_strip;
 static void initialize_neo_pixel(void) {
-    // LED strip initialization with the GPIO and 1 NeoPixel.
     led_strip_config_t strip_config = {
         .strip_gpio_num = GPIO_NUM_8,
         .max_leds = 1,
+        .led_pixel_format = LED_PIXEL_FORMAT_GRBW,
+        .led_model = LED_MODEL_WS2812,
     };
 
     led_strip_rmt_config_t rmt_config = {
+        .clk_src = RMT_CLK_SRC_APB,
         .resolution_hz = 10 * 1000 * 1000, // 10MHz
+        .mem_block_symbols = 0,
     };
 
     ESP_ERROR_CHECK(led_strip_new_rmt_device(&strip_config, &rmt_config, &led_strip));
@@ -107,6 +112,14 @@ static void cycle_devices(void) {
     }
 }
 
+static void test_8x16() {
+    m816.display(0, AllOn);
+    m816.display(1, AllOn);
+    m816_2.display(0,AllOn);
+    m816_2.display(1,AllOn);
+    vTaskDelay(3000 / portTICK_PERIOD_MS);
+}
+/*
 static void test_8x16_glyphs() {
     m816.display(0,Circle);
     m816.display(1,Square);
@@ -139,6 +152,7 @@ static void test_8x16_glyphs() {
     m816_2.display(1,ForwardSlash);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
 }
+*/
 
 static void check_bno055() {
     if (bno055.begin()) {
@@ -192,7 +206,7 @@ extern "C" void app_main(void) {
 
             if (m816.test() == ESP_OK and m816_2.test() == ESP_OK) {
                 alnum.test();
-                test_8x16_glyphs();
+                test_8x16();
                 m816.reset();
                 m816_2.reset();
                 alnum.reset();
