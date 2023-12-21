@@ -3,4 +3,6 @@ build
 *.old
 .idea
 .vscode
-managed_components
+**/managed_components
+**/dependencies.lock
+
