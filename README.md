@@ -42,10 +42,14 @@ A key feature of this development board is its use of RISC-V executing at 160MHz
 
 ## ESP32-S3-N32R8
 
-A basic blink project used to try to enble full flash and PSRAM enablement. This
-is available in v5 (ESP-IDF V5) only. The maximum amount of flash that can be
-enabled with this board and ESP-IDF V5 is 16 MB. PSRAM is enable. The on-board
-LED is via GPIO pin 38.
+A project with a built-in Web server that manipulates the built-in NeoPixel. It
+also enbles full flash (8 MiB) and PSRAM (32 MiB). This is available in the v5+
+folder. The version in the v5+ folder is a re-write of an earlier version in the
+v5 folder.
+
+_DO NOT USE THE VERSION IN THE V5 FOLDER!_
+
+The on-board NeoPixel LED is controlled via GPIO38.
 
 ## Dual-Blink
 
