@@ -13,6 +13,18 @@
 #include <lwip/err.h>
 
 #include "wifi_tools.h"
+//
+// settings.h contains the EXTERNAL_AP_SSID and EXTERNAL_AP_PWD
+// definitions for the WiFi SSID and passwords, respectively.
+// The global .gitignore file contains this file so that you can
+// define your versions and not have that secret information checked into
+// a public Git source repository.
+//
+// If you attempt to compile this file without creating your own version
+// then the compilation will fail.
+//
+#include "settings.h"
+
 static const char *TAG = "ESP32-S3-DevKitC-1.1-N32R8";
 
 // FreeRTOS event group to signal when we're connected.
@@ -27,16 +39,10 @@ static EventGroupHandle_t wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
 
-#define EXTERNAL_AP_SSID "YOUR LOCAL WIFI SSID"
-#define EXTERNAL_AP_PWD "YOU LOCAL WIFI PASSWORD"
-
 static int connect_retry_count = 0;
 const uint32_t MAXIMUM_RETRY_COUNT = 10;
 //
-// This switch statement has gotten large and complex.
-// An alternative might be an array with the enumerations indexing into
-// pointers to structures that contain a pointer to a function, although
-// I don't know how that would be any less complex.
+//
 //
 void wifi_event_handler (void *arg,
     esp_event_base_t event_base, int32_t event_id, void *event_data) {
@@ -46,6 +52,9 @@ void wifi_event_handler (void *arg,
             case WIFI_EVENT_STA_START:
                 ESP_LOGI(TAG, stringify(WIFI_EVENT_STA_START));
                 esp_wifi_connect();
+                break;
+            case WIFI_EVENT_STA_CONNECTED:
+                ESP_LOGI(TAG, stringify(WIFI_EVENT_STA_CONNECTED));
                 break;
             case WIFI_EVENT_STA_DISCONNECTED:
                 ESP_LOGI(TAG, stringify(WIFI_EVENT_STA_DISCONNECTED));
@@ -57,6 +66,12 @@ void wifi_event_handler (void *arg,
                     ESP_LOGI(TAG, "WIFI RECONNECT FAILURE");
                     xEventGroupSetBits(wifi_event_group, WIFI_FAIL_BIT);
                 }
+                break;
+            case WIFI_EVENT_STA_BEACON_TIMEOUT:
+                ESP_LOGI(TAG, stringify(WIFI_EVENT_STA_BEACON_TIMEOUT));
+                break;
+            case WIFI_EVENT_HOME_CHANNEL_CHANGE:
+                ESP_LOGI(TAG, stringify(WIFI_EVENT_HOME_CHANNEL_CHANGE));
                 break;
             default:
                 ESP_LOGI(TAG, "WIFI UNCAUGHT WIFI_EVENT %d", (int)event_id);
@@ -71,7 +86,7 @@ void wifi_event_handler (void *arg,
                     IP2STR(&evt->ip_info.ip));
                 connect_retry_count = 0;
                 xEventGroupSetBits(wifi_event_group, WIFI_CONNECTED_BIT);
-            }
+                }
                 break;
             default:
                 ESP_LOGI(TAG, "WIFI UNCAUGHT IP_EVENT %d", (int)event_id);

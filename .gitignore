@@ -6,3 +6,4 @@ build
 **/managed_components
 **/dependencies.lock
 **/cmake-build-debug
+settings.h

@@ -60,9 +60,8 @@ static void task_blink_neo_pixel(void * pvParameters) {
             led_strip_set_pixel(led_strip, 0, color[0], color[1], color[2]);
             led_strip_refresh(led_strip);
             vTaskDelay(500 / portTICK_PERIOD_MS);
-            led_strip_clear(led_strip);
-            vTaskDelay(500 / portTICK_PERIOD_MS);
         }
+        vTaskDelay(9500 / portTICK_PERIOD_MS);
     }
 }
 
@@ -85,7 +84,7 @@ static void task_blink_led(void * pvParameters) {
         gpio_set_level(GPIO_NUM_46, true);   // LED on
         vTaskDelay(100 / portTICK_PERIOD_MS);
         gpio_set_level(GPIO_NUM_46, false);  // LED off
-        vTaskDelay(2700 / portTICK_PERIOD_MS);
+        vTaskDelay(9700 / portTICK_PERIOD_MS);
     }
 }
 
