@@ -3,6 +3,7 @@ build
 *.old
 .idea
 .vscode
+.cache
 **/managed_components
 **/dependencies.lock
 **/cmake-build-debug

@@ -171,15 +171,17 @@ esp_err_t initialize_wifi_station(const char *SSID) {
             .sta = {
                     .ssid = EXTERNAL_AP_SSID,
                     .password = EXTERNAL_AP_PWD,
-                    /* Authmode threshold resets to WPA2 as default if password matches WPA2 standards (pasword len => 8).
-                     * If you want to connect the device to deprecated WEP/WPA networks, Please set the threshold value
-                     * to WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK and set the password with length and format matching to
-                     * WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK standards.
-                     */
+                    // Authmode threshold resets to WPA2 as default
+                    // if password matches WPA2 standards (pasword len => 8).
+                    // If you want to connect the device to deprecated WEP/WPA
+                    // networks, please set the threshold value to
+                    // WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK and set the password
+                    // with length and format matching to
+                    // WIFI_AUTH_WEP/WIFI_AUTH_WPA_PSK standards.
+                    //
                     .threshold.authmode = WIFI_AUTH_WPA_WPA2_PSK,
             },
     };
-
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config));
