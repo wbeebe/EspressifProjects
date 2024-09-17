@@ -26,6 +26,7 @@
 static const char *TAG = "ESP32-C3-I2C-DISPLAYS";
 
 AlphaNumeric alnum = AlphaNumeric(0x70);
+AlphaNumeric alnum_2 = AlphaNumeric(0x71);
 Matrix8by16 m816 = Matrix8by16(0x72);
 Matrix8by16 m816_2 = Matrix8by16(0x73);
 Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
@@ -40,18 +41,26 @@ int8_t ones{0},
     hund{0},
     thou{0};
 
-/*
-static void clock_increment(void) {
-    if (++ones > 9) { ones = 0;
-        if (++tens > 5) { tens = 0;
-            if (++hund > 9) { hund = 0;
-                if (++thou > 5) { thou = 0;
+int8_t alpha_secs_1{0},
+    alpha_secs_10{0},
+    alpha_min_1{0},
+    alpha_min_10{0},
+    alpha_hour_1{0},
+    alpha_hour_10{0};
+
+static void tick_clock(void) {
+    if (++alpha_secs_1 > 9) { alpha_secs_1 = 0;
+        if (++alpha_secs_10 > 5) { alpha_secs_10 = 0;
+            if (++alpha_min_1 > 9) { alpha_min_1 = 0;
+                if (++alpha_min_10 > 5) { alpha_min_10 = 0;
+                    if (++alpha_hour_1 > 9) { alpha_hour_1 = 0;
+                        if (++alpha_hour_10 > 9) { alpha_hour_10 = 0; }
+                    }
                 }
             }
         }
     }
 }
-*/
 
 static void clock_decrement(void) {
     if (--ones < 0) { ones = 9;
@@ -107,52 +116,11 @@ static void cycle_devices(void) {
         clock_decrement();
         m816.display(thou, hund);
         m816_2.display(tens, ones);
-        //clock_increment();
-        alnum.display(counter++);
+        tick_clock();
+        alnum.display(alpha_min_10, alpha_min_1, alpha_secs_10, alpha_secs_1);
+        alnum_2.display('*','*',alpha_hour_10, alpha_hour_1);
     }
 }
-
-static void test_8x16() {
-    m816.display(0, AllOn);
-    m816.display(1, AllOn);
-    m816_2.display(0,AllOn);
-    m816_2.display(1,AllOn);
-    vTaskDelay(3000 / portTICK_PERIOD_MS);
-}
-/*
-static void test_8x16_glyphs() {
-    m816.display(0,Circle);
-    m816.display(1,Square);
-    m816_2.display(0,Circle);
-    m816_2.display(1,Square);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    m816.display(0,Diamond);
-    m816.display(1,Check);
-    m816_2.display(0,Diamond);
-    m816_2.display(1,Check);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    m816.display(0,Cross);
-    m816.display(1,Face);
-    m816_2.display(0,Cross);
-    m816_2.display(1,Face);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    m816.display(0,Frown);
-    m816.display(1,Smile);
-    m816_2.display(0,Frown);
-    m816_2.display(1,Smile);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    m816.display(0,ForwardSlash);
-    m816.display(1,BackSlash);
-    m816_2.display(0,ForwardSlash);
-    m816_2.display(1,BackSlash);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    m816.display(0,BackSlash);
-    m816.display(1,ForwardSlash);
-    m816_2.display(0,BackSlash);
-    m816_2.display(1,ForwardSlash);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-}
-*/
 
 static void check_bno055() {
     if (bno055.begin()) {
@@ -172,52 +140,54 @@ static void check_bno055() {
         ESP_LOGI(TAG,"    System Error %02X", system_error);
     }
     else {
-        ESP_LOGI(TAG, "BNO055 failed to start.");
+        ESP_LOGI(TAG, "BNO055 Startup FAILED.");
     }
 }
 
 extern "C" void app_main(void) {
-    ESP_LOGI(TAG, "BEGIN");
+    ESP_LOGI(TAG, "Begin");
     ESP_LOGI(TAG, IDF_VER);
-    ESP_LOGI(TAG, "LED CONFIGURE");
+    ESP_LOGI(TAG, "LED Configure");
     initialize_neo_pixel();
-    ESP_LOGI(TAG, "I2C CONFIGURE");
-    auto i2c_status = i2c_initialize();
+    ESP_LOGI(TAG, "I2C Configure");
 
-    if (i2c_status != ESP_OK) {
-        ESP_LOGI(TAG, "I2C FAILED INITIALIZATION");
+    if (i2c_initialize() != ESP_OK) {
+        ESP_LOGI(TAG, "I2C Initialization FAILED");
     }
     else {
-        ESP_LOGI(TAG, "I2C DEVICE SCAN.");
+        ESP_LOGI(TAG, "I2C Device Scan.");
         i2c_scan();
 
         check_bno055();
 
-        auto an_status = m816.initialize();
-        auto an_status_2 = m816_2.initialize();
+        bool alpha_initialized =
+            (m816.initialize() == ESP_OK and m816_2.initialize() == ESP_OK and
+            alnum.initialize() == ESP_OK and alnum_2.initialize() == ESP_OK);
 
-        if (an_status == ESP_OK and an_status_2 == ESP_OK) {
-            ESP_LOGI(TAG, "Alphanumeric initialized.");
+        if (alpha_initialized) {
+            ESP_LOGI(TAG, "Alphanumeric Initialization SUCCESS");
+
+            bool alpha_tested =
+                (m816.test() == ESP_OK and m816_2.test() == ESP_OK and
+                alnum.test() == ESP_OK and alnum_2.test() == ESP_OK);
+            vTaskDelay(3000 / portTICK_PERIOD_MS);
             m816.reset();
             m816_2.reset();
-            alnum.initialize();
             alnum.reset();
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
+            alnum_2.reset();
+            m816.show_all_8x16_glyphs();
+            m816.reset();
+            m816_2.show_all_8x16_glyphs();
 
-            if (m816.test() == ESP_OK and m816_2.test() == ESP_OK) {
-                alnum.test();
-                test_8x16();
-                m816.reset();
-                m816_2.reset();
-                alnum.reset();
-                ESP_LOGI(TAG, "Alphanumeric testing finished.");
+            if (alpha_tested) {
+                ESP_LOGI(TAG, "Alphanumeric Testing FINISHED");
             }
             else {
-                ESP_LOGI(TAG, "Alphanumeric testing FAILED");
+                ESP_LOGI(TAG, "Alphanumeric Testing FAILED");
             }
         }
         else {
-            ESP_LOGI(TAG, "Alphanumeric initialization FAILED.");
+            ESP_LOGI(TAG, "Alphanumeric Initialization FAILED");
         }
     }
 

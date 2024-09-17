@@ -1,4 +1,5 @@
 #include <cstring>
+#include "freertos/FreeRTOS.h"
 #include "matrix8by16.hpp"
 #include "vt52_rom.hpp"
 
@@ -66,4 +67,25 @@ esp_err_t Matrix8by16::display(const int8_t tens, const int8_t ones) {
 
     return i2c_master_write_to_device(
         I2C_NUM_0, device_address, buffer, sizeof(buffer), I2C_TICKS_TO_WAIT);
+}
+
+void Matrix8by16::show_all_8x16_glyphs() {
+    display(0,Circle);
+    display(1,Square);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    display(0,Diamond);
+    display(1,Check);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    display(0,Cross);
+    display(1,Face);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    display(0,Frown);
+    display(1,Smile);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    display(0,ForwardSlash);
+    display(1,BackSlash);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    display(0,BackSlash);
+    display(1,ForwardSlash);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
 }

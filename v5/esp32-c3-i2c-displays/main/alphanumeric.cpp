@@ -101,6 +101,7 @@ static const uint16_t ascii_table[] = {
 
 const uint8_t ascii_table_numeric_start = 16;
 const uint8_t ascii_table_alpha_start = ascii_table_numeric_start + 7;
+const uint8_t space_offset = 0x20;
 
 AlphaNumeric::AlphaNumeric(uint8_t _device_address) {
     device_address = _device_address;
@@ -149,10 +150,22 @@ esp_err_t AlphaNumeric::display(uint8_t thou, uint8_t hund, uint8_t tens,
                                 uint8_t ones) {
     uint8_t all_data[9];
     all_data[0] = 0;
-    all_data[1] = ascii_table[thou + ascii_table_numeric_start] & 0xff;
-    all_data[2] = (ascii_table[thou + ascii_table_numeric_start] >> 8) & 0xff;
-    all_data[3] = ascii_table[hund + ascii_table_numeric_start] & 0xff;
-    all_data[4] = (ascii_table[hund + ascii_table_numeric_start] >> 8) & 0xff;
+    if (thou < 0x10) {
+        all_data[1] = ascii_table[thou + ascii_table_numeric_start] & 0xff;
+        all_data[2] = (ascii_table[thou + ascii_table_numeric_start] >> 8) & 0xff;
+    }
+    else {
+        all_data[1] = ascii_table[thou - space_offset] & 0xff;
+        all_data[2] = (ascii_table[thou - space_offset] >> 8) & 0xff;
+    }
+    if (hund < 0x10) {
+        all_data[3] = ascii_table[hund + ascii_table_numeric_start] & 0xff;
+        all_data[4] = (ascii_table[hund + ascii_table_numeric_start] >> 8) & 0xff;
+    }
+    else {
+        all_data[3] = ascii_table[hund - space_offset] & 0xff;
+        all_data[4] = (ascii_table[hund - space_offset] >> 8) & 0xff;
+    }
     all_data[5] = ascii_table[tens + ascii_table_numeric_start] & 0xff;
     all_data[6] = (ascii_table[tens + ascii_table_numeric_start] >> 8) & 0xff;
     all_data[7] = ascii_table[ones + ascii_table_numeric_start] & 0xff;
