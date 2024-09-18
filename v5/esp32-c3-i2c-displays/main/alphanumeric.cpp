@@ -150,26 +150,47 @@ esp_err_t AlphaNumeric::display(uint8_t thou, uint8_t hund, uint8_t tens,
                                 uint8_t ones) {
     uint8_t all_data[9];
     all_data[0] = 0;
+    ones &= 0x7F;
+    tens &= 0x7F;
+    hund &= 0x7F;
+    thou &= 0x7F;
+
     if (thou < 0x10) {
         all_data[1] = ascii_table[thou + ascii_table_numeric_start] & 0xff;
         all_data[2] = (ascii_table[thou + ascii_table_numeric_start] >> 8) & 0xff;
     }
-    else {
+    else if (thou >= space_offset) {
         all_data[1] = ascii_table[thou - space_offset] & 0xff;
         all_data[2] = (ascii_table[thou - space_offset] >> 8) & 0xff;
     }
+
     if (hund < 0x10) {
         all_data[3] = ascii_table[hund + ascii_table_numeric_start] & 0xff;
         all_data[4] = (ascii_table[hund + ascii_table_numeric_start] >> 8) & 0xff;
     }
-    else {
+    else if (hund >= space_offset) {
         all_data[3] = ascii_table[hund - space_offset] & 0xff;
         all_data[4] = (ascii_table[hund - space_offset] >> 8) & 0xff;
     }
-    all_data[5] = ascii_table[tens + ascii_table_numeric_start] & 0xff;
-    all_data[6] = (ascii_table[tens + ascii_table_numeric_start] >> 8) & 0xff;
-    all_data[7] = ascii_table[ones + ascii_table_numeric_start] & 0xff;
-    all_data[8] = (ascii_table[ones + ascii_table_numeric_start] >> 8) & 0xff;
+
+    if (tens < 0x10) {
+        all_data[5] = ascii_table[tens + ascii_table_numeric_start] & 0xff;
+        all_data[6] = (ascii_table[tens + ascii_table_numeric_start] >> 8) & 0xff;
+    }
+    else if (tens >= space_offset) {
+        all_data[5] = ascii_table[tens - space_offset] & 0xff;
+        all_data[6] = (ascii_table[tens - space_offset] >> 8) & 0xff;
+    }
+
+    if (ones < 0x10) {
+        all_data[7] = ascii_table[ones + ascii_table_numeric_start] & 0xff;
+        all_data[8] = (ascii_table[ones + ascii_table_numeric_start] >> 8) & 0xff;
+    }
+    else if (ones >= space_offset) {
+        all_data[7] = ascii_table[ones - space_offset] & 0xff;
+        all_data[8] = (ascii_table[ones - space_offset] >> 8) & 0xff;
+    }
+
     return i2c_master_write_to_device(I2C_NUM_0, device_address, all_data,
                                       sizeof(all_data), I2C_TICKS_TO_WAIT);
 }
