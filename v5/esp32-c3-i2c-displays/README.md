@@ -85,56 +85,56 @@ load:0x3fcd5820,len:0x1738
 load:0x403cc710,len:0xae8
 load:0x403ce710,len:0x2e38
 entry 0x403cc71a
-I (30) boot: ESP-IDF v5.2-dev-1051-g17d6768e65 2nd stage bootloader
-I (30) boot: compile time Jun 14 2023 16:42:05
-I (31) boot: chip revision: v0.3
-I (35) boot.esp32c3: SPI Speed      : 80MHz
-I (40) boot.esp32c3: SPI Mode       : DIO
-I (44) boot.esp32c3: SPI Flash Size : 4MB
-I (49) boot: Enabling RNG early entropy source...
-I (54) boot: Partition Table:
-I (58) boot: ## Label            Usage          Type ST Offset   Length
-I (65) boot:  0 nvs              WiFi data        01 02 00009000 00006000
-I (73) boot:  1 phy_init         RF data          01 01 0000f000 00001000
-I (80) boot:  2 factory          factory app      00 00 00010000 00100000
-I (88) boot: End of partition table
-I (92) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0b4b0h ( 46256) map
-I (108) esp_image: segment 1: paddr=0001b4d8 vaddr=3fc8ca00 size=011a8h (  4520) load
-I (110) esp_image: segment 2: paddr=0001c688 vaddr=40380000 size=03990h ( 14736) load
-I (120) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=1baf8h (113400) map
-I (144) esp_image: segment 4: paddr=0003bb20 vaddr=40383990 size=08edch ( 36572) load
+I (30) boot: ESP-IDF v5.3.1 2nd stage bootloader
+I (30) boot: compile time Sep 11 2024 08:09:25
+I (30) boot: chip revision: v0.3
+I (33) boot.esp32c3: SPI Speed      : 80MHz
+I (38) boot.esp32c3: SPI Mode       : DIO
+I (43) boot.esp32c3: SPI Flash Size : 4MB
+I (47) boot: Enabling RNG early entropy source...
+I (53) boot: Partition Table:
+I (56) boot: ## Label            Usage          Type ST Offset   Length
+I (64) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (71) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (79) boot:  2 factory          factory app      00 00 00010000 00100000
+I (86) boot: End of partition table
+I (90) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0bc14h ( 48148) map
+I (106) esp_image: segment 1: paddr=0001bc3c vaddr=3fc8da00 size=01678h (  5752) load
+I (108) esp_image: segment 2: paddr=0001d2bc vaddr=40380000 size=02d5ch ( 11612) load
+I (118) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=1bdd4h (114132) map
+I (142) esp_image: segment 4: paddr=0003bdfc vaddr=40382d5c size=0abb8h ( 43960) load
 I (155) boot: Loaded app from partition at offset 0x10000
 I (155) boot: Disabling RNG early entropy source...
 I (166) cpu_start: Unicore app
-I (166) cpu_start: Pro cpu up.
 I (175) cpu_start: Pro cpu start user code
 I (175) cpu_start: cpu freq: 160000000 Hz
-I (175) cpu_start: Application information:
-I (178) cpu_start: Project name:     blink
-I (183) cpu_start: App version:      92623dd-dirty
-I (188) cpu_start: Compile time:     Jun 14 2023 16:41:58
-I (194) cpu_start: ELF file SHA256:  61c6f6f26549587d...
-I (200) cpu_start: ESP-IDF:          v5.2-dev-1051-g17d6768e65
-I (207) cpu_start: Min chip rev:     v0.3
-I (212) cpu_start: Max chip rev:     v0.99 
-I (216) cpu_start: Chip rev:         v0.3
-I (221) heap_init: Initializing. RAM available for dynamic allocation:
-I (228) heap_init: At 3FC8EAA0 len 0004DC70 (311 KiB): DRAM
-I (235) heap_init: At 3FCDC710 len 00002950 (10 KiB): STACK/DRAM
-I (241) heap_init: At 50000010 len 00001FD8 (7 KiB): RTCRAM
-I (248) spi_flash: detected chip: generic
-I (252) spi_flash: flash io: dio
-I (256) sleep: Configure to isolate all GPIO pins in sleep state
-I (263) sleep: Enable automatic switching of GPIO sleep configuration
-I (270) app_start: Starting scheduler on CPU0
-I (275) main_task: Started on CPU0
-I (275) main_task: Calling app_main()
-I (275) ESP32-C3-I2C-DISPLAYS: BEGIN
-I (285) ESP32-C3-I2C-DISPLAYS: v5.2-dev-1051-g17d6768e65
-I (285) ESP32-C3-I2C-DISPLAYS: LED CONFIGURE
-I (295) gpio: GPIO[8]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:0 
-I (305) ESP32-C3-I2C-DISPLAYS: I2C CONFIGURE
-I (305) ESP32-C3-I2C-DISPLAYS: I2C DEVICE SCAN.
+I (175) app_init: Application information:
+I (178) app_init: Project name:     blink
+I (182) app_init: App version:      df9717b-dirty
+I (188) app_init: Compile time:     Sep 18 2024 07:11:13
+I (194) app_init: ELF file SHA256:  f7eaffd2a4b79f2a...
+I (200) app_init: ESP-IDF:          v5.3.1
+I (204) efuse_init: Min chip rev:     v0.3
+I (209) efuse_init: Max chip rev:     v1.99 
+I (214) efuse_init: Chip rev:         v0.3
+I (219) heap_init: Initializing. RAM available for dynamic allocation:
+I (226) heap_init: At 3FC8FFC0 len 00030040 (192 KiB): RAM
+I (232) heap_init: At 3FCC0000 len 0001C710 (113 KiB): Retention RAM
+I (239) heap_init: At 3FCDC710 len 00002950 (10 KiB): Retention RAM
+I (246) heap_init: At 50000200 len 00001DE8 (7 KiB): RTCRAM
+I (254) spi_flash: detected chip: generic
+I (257) spi_flash: flash io: dio
+W (261) i2c: This driver is an old driver, please migrate your application code to adapt `driver/i2c_master.h`
+I (272) sleep: Configure to isolate all GPIO pins in sleep state
+I (279) sleep: Enable automatic switching of GPIO sleep configuration
+I (286) main_task: Started on CPU0
+I (296) main_task: Calling app_main()
+I (296) ESP32-C3-I2C-DISPLAYS: Begin
+I (296) ESP32-C3-I2C-DISPLAYS: v5.3.1
+I (296) ESP32-C3-I2C-DISPLAYS: LED Configure
+I (306) gpio: GPIO[8]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 1| Pulldown: 0| Intr:0 
+I (316) ESP32-C3-I2C-DISPLAYS: I2C Configure
+I (316) ESP32-C3-I2C-DISPLAYS: I2C Device Scan.
      0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
 00: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -143,20 +143,20 @@ I (305) ESP32-C3-I2C-DISPLAYS: I2C DEVICE SCAN.
 40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 50: -- -- -- 53 -- -- -- 57 -- -- -- -- -- -- -- -- 
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-70: 70 -- 72 73 -- -- -- -- -- -- -- -- -- -- -- -- 
-I (3625) BNO055: CHECK TO SEE IF BNO055 COMES OUT OF SOFTWARE RESET
-I (3745) ESP32-C3-I2C-DISPLAYS: BNO055 started.
-I (3745) ESP32-C3-I2C-DISPLAYS: Acceleration Rev 251
-I (3745) ESP32-C3-I2C-DISPLAYS: Magnitometer Rev 50
-I (3745) ESP32-C3-I2C-DISPLAYS:    Gyroscope Rev 15
-I (3755) ESP32-C3-I2C-DISPLAYS:           SW Rev 785
-I (3755) ESP32-C3-I2C-DISPLAYS:   Bootloader Rev 21
-I (3965) ESP32-C3-I2C-DISPLAYS:    System Status 05
-I (3965) ESP32-C3-I2C-DISPLAYS: Self Test Result 0F
-I (3965) ESP32-C3-I2C-DISPLAYS:     System Error 00
-I (3965) ESP32-C3-I2C-DISPLAYS: Alphanumeric initialized.
-I (10975) ESP32-C3-I2C-DISPLAYS: Alphanumeric testing finished.
-I (10975) ESP32-C3-I2C-DISPLAYS: Start cycling NeoPixel colors.
+70: 70 71 72 73 -- -- -- -- -- -- -- -- -- -- -- -- 
+I (3636) BNO055: CHECK TO SEE IF BNO055 COMES OUT OF SOFTWARE RESET
+I (3756) ESP32-C3-I2C-DISPLAYS: BNO055 started.
+I (3756) ESP32-C3-I2C-DISPLAYS: Acceleration Rev 251
+I (3756) ESP32-C3-I2C-DISPLAYS: Magnitometer Rev 50
+I (3756) ESP32-C3-I2C-DISPLAYS:    Gyroscope Rev 15
+I (3766) ESP32-C3-I2C-DISPLAYS:           SW Rev 785
+I (3766) ESP32-C3-I2C-DISPLAYS:   Bootloader Rev 21
+I (3976) ESP32-C3-I2C-DISPLAYS:    System Status 05
+I (3976) ESP32-C3-I2C-DISPLAYS: Self Test Result 0F
+I (3976) ESP32-C3-I2C-DISPLAYS:     System Error 00
+I (3976) ESP32-C3-I2C-DISPLAYS: Alphanumeric Initialization SUCCESS
+I (18986) ESP32-C3-I2C-DISPLAYS: Alphanumeric Testing FINISHED
+I (18986) ESP32-C3-I2C-DISPLAYS: Start cycling NeoPixel colors.
 ```
 
 ## Troubleshooting
