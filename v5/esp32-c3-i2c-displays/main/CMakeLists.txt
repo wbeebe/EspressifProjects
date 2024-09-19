@@ -5,5 +5,6 @@ idf_component_register(SRCS "main.cpp"
                             "matrix8by16.cpp"
                             "alphanumeric.cpp"
                             "Adafruit_BNO055.cpp"
+                            "mcp23017.cpp"
 
                             INCLUDE_DIRS ".")

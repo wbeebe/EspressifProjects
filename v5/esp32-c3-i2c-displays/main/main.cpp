@@ -22,6 +22,7 @@
 #include "matrix8by16.hpp"
 #include "alphanumeric.hpp"
 #include "Adafruit_BNO055.hpp"
+#include "mcp23017.hpp"
 
 static const char *TAG = "ESP32-C3-I2C-DISPLAYS";
 
@@ -30,6 +31,7 @@ AlphaNumeric alnum_2 = AlphaNumeric(0x71);
 Matrix8by16 m816 = Matrix8by16(0x72);
 Matrix8by16 m816_2 = Matrix8by16(0x73);
 Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
+MCP23017 mcp23017 = MCP23017(MCP23017_DEFAULT_ADDRESS);
 
 uint16_t counter{0};
 
@@ -107,6 +109,31 @@ const array<array<int, 3>, 7> colors {{
     {0,0,0}    // black
     }};
 
+const uint8_t bit_arrays[] {
+    0x01,
+    0x02,
+    0x04,
+    0x08,
+    0x10,
+    0x20,
+    0x40,
+    0x80,
+    0x40,
+    0x20,
+    0x10,
+    0x08,
+    0x04,
+    0x02,
+};
+
+uint8_t bit_arrays_index = 0;
+uint8_t bit_arrays_max = sizeof(bit_arrays) / sizeof(bit_arrays[0]);
+
+static void march_bits(void) {
+    mcp23017.write_byte_data(GPIOA, bit_arrays[bit_arrays_index]);
+    if (++bit_arrays_index >= bit_arrays_max) bit_arrays_index = 0;
+}
+
 static void cycle_devices(void) {
     for(auto color : colors) {
         led_strip_set_pixel(led_strip, 0, color[0], color[1], color[2]);
@@ -119,6 +146,7 @@ static void cycle_devices(void) {
         tick_clock();
         alnum.display(alpha_min_10, alpha_min_1, alpha_secs_10, alpha_secs_1);
         alnum_2.display('*','*',alpha_hour_10, alpha_hour_1);
+        march_bits();
     }
 }
 
@@ -160,6 +188,11 @@ extern "C" void app_main(void) {
 
         check_bno055();
 
+        if (mcp23017.initialize() == ESP_OK)
+            ESP_LOGI(TAG, "MCP23017 Initialization SUCCESS");
+        if (mcp23017.test() == ESP_OK)
+            ESP_LOGI(TAG, "MCP23017 test SUCCESS");
+
         bool alpha_initialized =
             (m816.initialize() == ESP_OK and m816_2.initialize() == ESP_OK and
             alnum.initialize() == ESP_OK and alnum_2.initialize() == ESP_OK);
@@ -171,6 +204,7 @@ extern "C" void app_main(void) {
                 (m816.test() == ESP_OK and m816_2.test() == ESP_OK and
                 alnum.test() == ESP_OK and alnum_2.test() == ESP_OK);
             vTaskDelay(3000 / portTICK_PERIOD_MS);
+            mcp23017.reset();
             m816.reset();
             m816_2.reset();
             alnum.reset();
