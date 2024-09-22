@@ -126,12 +126,15 @@ const uint8_t bit_arrays[] {
     0x02,
 };
 
-uint8_t bit_arrays_index = 0;
+uint8_t bit_arrays_index_a = 0;
 uint8_t bit_arrays_max = sizeof(bit_arrays) / sizeof(bit_arrays[0]);
+uint8_t bit_arrays_min = 0;
 
 static void march_bits(void) {
-    mcp23017.write_byte_data(GPIOA, bit_arrays[bit_arrays_index]);
-    if (++bit_arrays_index >= bit_arrays_max) bit_arrays_index = 0;
+    mcp23017.write_byte_data(GPIOA, bit_arrays[bit_arrays_index_a]);
+    mcp23017.write_byte_data(GPIOB, bit_arrays[bit_arrays_index_a]);
+    if (++bit_arrays_index_a >= bit_arrays_max)
+        bit_arrays_index_a = bit_arrays_min;
 }
 
 static void cycle_devices(void) {
