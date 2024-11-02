@@ -33,8 +33,6 @@ Matrix8by16 m816_2 = Matrix8by16(0x73);
 Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
 MCP23017 mcp23017 = MCP23017(MCP23017_DEFAULT_ADDRESS);
 
-uint16_t counter{0};
-
 // Sample clock. Counts one hour up to 59:59
 // then rolls over to 00:00.
 //
@@ -137,6 +135,8 @@ static void march_bits(void) {
         bit_arrays_index_a = bit_arrays_min;
 }
 
+uint8_t counter{0};
+
 static void cycle_devices(void) {
     for(auto color : colors) {
         led_strip_set_pixel(led_strip, 0, color[0], color[1], color[2]);
@@ -148,7 +148,11 @@ static void cycle_devices(void) {
         m816_2.display(tens, ones);
         tick_clock();
         alnum.display(alpha_min_10, alpha_min_1, alpha_secs_10, alpha_secs_1);
-        alnum_2.display('*','*',alpha_hour_10, alpha_hour_1);
+        alnum_2.display(
+            counter & 1 ? '*' : '+',
+            counter & 1 ? '+' : '*',
+            alpha_hour_10, alpha_hour_1);
+        counter++;
         march_bits();
     }
 }
@@ -193,8 +197,10 @@ extern "C" void app_main(void) {
 
         if (mcp23017.initialize() == ESP_OK)
             ESP_LOGI(TAG, "MCP23017 Initialization SUCCESS");
+        if (mcp23017.reset() == ESP_OK)
+            ESP_LOGI(TAG, "MCP23017 Reset SUCCESS");
         if (mcp23017.test() == ESP_OK)
-            ESP_LOGI(TAG, "MCP23017 test SUCCESS");
+            ESP_LOGI(TAG, "MCP23017 Test SUCCESS");
 
         bool alpha_initialized =
             (m816.initialize() == ESP_OK and m816_2.initialize() == ESP_OK and
