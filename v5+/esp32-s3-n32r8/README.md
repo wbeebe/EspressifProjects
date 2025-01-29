@@ -20,7 +20,7 @@ for more information about it.
 
 ## ESP-IDF Toolchain Version
 
-This project uses ESP-IDF version 5.4 in order to enable all the flash and memory available on the ESP32-S3-DevKitC-1-N8R32. This is currently identifying itself as v5.2.2.
+This project uses ESP-IDF version 5.4 in order to enable all the flash and memory available on the ESP32-S3-DevKitC-1-N8R32.
 
 ## Configuration
 
