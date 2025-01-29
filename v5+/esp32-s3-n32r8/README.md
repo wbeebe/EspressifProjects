@@ -20,7 +20,7 @@ for more information about it.
 
 ## ESP-IDF Toolchain Version
 
-This project uses ESP-IDF version 5.2.2 in order to enable all the flash and memory available on the ESP32-S3-DevKitC-1-N8R32. This is currently identifying itself as v5.2.2.
+This project uses ESP-IDF version 5.4 in order to enable all the flash and memory available on the ESP32-S3-DevKitC-1-N8R32. This is currently identifying itself as v5.2.2.
 
 ## Configuration
 
@@ -115,7 +115,7 @@ I (1157) cpu_start: Project name:     esp32-s3-r8n32
 I (1162) cpu_start: App version:      f1b4f7e-dirty
 I (1168) cpu_start: Compile time:     Jul  7 2024 13:31:38
 I (1174) cpu_start: ELF file SHA256:  8c304aadf614f5fe...
-I (1180) cpu_start: ESP-IDF:          v5.2.2
+I (1180) cpu_start: ESP-IDF:          v5.4
 I (1185) cpu_start: Min chip rev:     v0.0
 I (1190) cpu_start: Max chip rev:     v0.99 
 I (1195) cpu_start: Chip rev:         v0.1
@@ -133,7 +133,7 @@ I (1263) main_task: Started on CPU0
 I (1273) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
 I (1273) main_task: Calling app_main()
 I (1283) ESP32-S3-DevKitC-1.1-N32R8: APP_MAIN BEGIN
-I (1283) ESP32-S3-DevKitC-1.1-N32R8: ESP-IDF VERSION: v5.2.2
+I (1283) ESP32-S3-DevKitC-1.1-N32R8: ESP-IDF VERSION: v5.4
 I (1293) ESP32-S3-DevKitC-1.1-N32R8: CHIP MODEL: ESP32S3
 I (1303) ESP32-S3-DevKitC-1.1-N32R8: CHIP FEATURES: WIFI BLE 
 I (1303) ESP32-S3-DevKitC-1.1-N32R8: REVISION: 1
