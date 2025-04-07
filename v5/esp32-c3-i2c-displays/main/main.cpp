@@ -26,8 +26,8 @@
 
 static const char *TAG = "ESP32-C3-I2C-DISPLAYS";
 
-AlphaNumeric alnum = AlphaNumeric(0x70);
-AlphaNumeric alnum_2 = AlphaNumeric(0x71);
+AlphaNumeric alnum1 = AlphaNumeric(0x70);
+AlphaNumeric alnum2 = AlphaNumeric(0x71);
 Matrix8by16 m816 = Matrix8by16(0x72);
 Matrix8by16 m816_2 = Matrix8by16(0x73);
 Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
@@ -107,34 +107,6 @@ const array<array<int, 3>, 7> colors {{
     {0,0,0}    // black
     }};
 
-const uint8_t bit_arrays[] {
-    0x01,
-    0x02,
-    0x04,
-    0x08,
-    0x10,
-    0x20,
-    0x40,
-    0x80,
-    0x40,
-    0x20,
-    0x10,
-    0x08,
-    0x04,
-    0x02,
-};
-
-uint8_t bit_arrays_index_a = 0;
-uint8_t bit_arrays_max = sizeof(bit_arrays) / sizeof(bit_arrays[0]);
-uint8_t bit_arrays_min = 0;
-
-static void march_bits(void) {
-    mcp23017.write_byte_data(GPIOA, bit_arrays[bit_arrays_index_a]);
-    mcp23017.write_byte_data(GPIOB, bit_arrays[bit_arrays_index_a]);
-    if (++bit_arrays_index_a >= bit_arrays_max)
-        bit_arrays_index_a = bit_arrays_min;
-}
-
 uint8_t counter{0};
 
 static void cycle_devices(void) {
@@ -147,19 +119,19 @@ static void cycle_devices(void) {
         m816.display(thou, hund);
         m816_2.display(tens, ones);
         tick_clock();
-        alnum.display(alpha_min_10, alpha_min_1, alpha_secs_10, alpha_secs_1);
-        alnum_2.display(
+        alnum1.display(alpha_min_10, alpha_min_1, alpha_secs_10, alpha_secs_1);
+        alnum2.display(
             counter & 1 ? '*' : '+',
             counter & 1 ? '+' : '*',
             alpha_hour_10, alpha_hour_1);
         counter++;
-        march_bits();
+        mcp23017.march_bits();
     }
 }
 
-static void check_bno055() {
+static void check_bno055_health() {
     if (bno055.begin()) {
-        ESP_LOGI(TAG, "BNO055 started.");
+        ESP_LOGI(TAG, "BNO055 BEGIN.");
         adafruit_bno055_rev_info_t info;
         bno055.getRevInfo(&info);
         ESP_LOGI(TAG,"Acceleration Rev %d",info.accel_rev);
@@ -179,6 +151,28 @@ static void check_bno055() {
     }
 }
 
+static void display_eight_characters(uint8_t a, uint8_t b, uint8_t c, uint8_t d, uint8_t e, uint8_t f, uint8_t g, uint8_t h) {
+    alnum2.display(a, b, c, d);
+    alnum1.display(e, f, g, h);
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+}
+
+static void display_all_aphanumeric_characters(void) {
+    display_eight_characters('!','"','#','$','%','&','\'','(');
+    display_eight_characters(')','*','+',',','-','.','/','(');
+    display_eight_characters('0','1','2','3','4','5','6','7');
+    display_eight_characters('8','9',':',';','<','=','>','?');
+    display_eight_characters('?','@','A','B','C','D','E','F');
+    display_eight_characters('G','H','I','J','K','L','M','N');
+    display_eight_characters('O','P','Q','R','S','T','U','V');
+    display_eight_characters('W','X','Y','Z','[','\\',']','^');
+    display_eight_characters('_','`','a','b','c','d','e','f');
+    display_eight_characters('g','h','i','j','k','l','m','n');
+    display_eight_characters('o','p','q','r','s','t','u','v');
+    display_eight_characters('w','x','y','z','{','|','}','~');
+    display_eight_characters('T','E','S','T',' ','E','N','D');
+}
+
 extern "C" void app_main(void) {
     ESP_LOGI(TAG, "Begin");
     ESP_LOGI(TAG, IDF_VER);
@@ -193,7 +187,7 @@ extern "C" void app_main(void) {
         ESP_LOGI(TAG, "I2C Device Scan.");
         i2c_scan();
 
-        check_bno055();
+        check_bno055_health();
 
         if (mcp23017.initialize() == ESP_OK)
             ESP_LOGI(TAG, "MCP23017 Initialization SUCCESS");
@@ -204,20 +198,21 @@ extern "C" void app_main(void) {
 
         bool alpha_initialized =
             (m816.initialize() == ESP_OK and m816_2.initialize() == ESP_OK and
-            alnum.initialize() == ESP_OK and alnum_2.initialize() == ESP_OK);
+            alnum1.initialize() == ESP_OK and alnum2.initialize() == ESP_OK);
 
         if (alpha_initialized) {
             ESP_LOGI(TAG, "Alphanumeric Initialization SUCCESS");
 
             bool alpha_tested =
                 (m816.test() == ESP_OK and m816_2.test() == ESP_OK and
-                alnum.test() == ESP_OK and alnum_2.test() == ESP_OK);
-            vTaskDelay(3000 / portTICK_PERIOD_MS);
+                alnum1.test() == ESP_OK and alnum2.test() == ESP_OK);
+            vTaskDelay(2000 / portTICK_PERIOD_MS);
+            display_all_aphanumeric_characters();
             mcp23017.reset();
             m816.reset();
             m816_2.reset();
-            alnum.reset();
-            alnum_2.reset();
+            alnum1.reset();
+            alnum2.reset();
             m816.show_all_8x16_glyphs();
             m816.reset();
             m816_2.show_all_8x16_glyphs();

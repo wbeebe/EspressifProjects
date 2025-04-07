@@ -31,9 +31,17 @@ const uint8_t INTCAPB  = 0x11;
 const uint8_t GPIOB    = 0x13;
 const uint8_t OLATB    = 0x15;
 
-
 class MCP23017 : Device {
+    private:
     uint8_t device_address;
+    const uint8_t bit_arrays[14] {
+        0x01,0x02,0x04,0x08,0x10,0x20,0x40,
+        0x80,0x40,0x20,0x10,0x08,0x04,0x02,
+    };
+
+    uint8_t bit_arrays_index_a = 0;
+    uint8_t bit_arrays_max = sizeof(bit_arrays) / sizeof(bit_arrays[0]);
+    uint8_t bit_arrays_min = 0;
 
     public:
         MCP23017(uint8_t _device_address);
@@ -46,4 +54,5 @@ class MCP23017 : Device {
 
         esp_err_t write_byte_data(const uint8_t port, const uint8_t data);
 
+        void march_bits(void);
 };

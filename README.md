@@ -4,11 +4,11 @@ A collection of projects I've re/written over time for programming Espressif
 MCUs. Languages used are C/C++ and MicroPython.
 
 - For C/C++ programming I've used the ESP-IDF development tools
-  v5.4 (https://github.com/espressif/esp-idf) on Linux Mint 22.1.
+  v5.4.1 (https://github.com/espressif/esp-idf) on Linux Mint 22.1.
 - For MicroPython I've used version 1.24.1
   (https://github.com/micropython/micropython)
 
-These projects are current as of January 2025.
+These projects are current as of April 2025.
 
 There are now three ESP-IDF folders, v4 for ESP-IDF 4.x, v5 and v5+ for ESP-IDF
 v5.x. All new work is on the v5 and v5+ branches. The v4 is left for historical

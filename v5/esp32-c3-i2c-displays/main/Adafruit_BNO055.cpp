@@ -808,7 +808,10 @@ void Adafruit_BNO055::enterNormalMode() {
  */
 bool Adafruit_BNO055::write8(adafruit_bno055_reg_t reg, uint8_t value) {
   uint8_t buffer[2] = {(uint8_t)reg, (uint8_t)value};
-  return write_data(address, buffer, sizeof(buffer)) == ESP_OK;
+  //return write_data(address, buffer, sizeof(buffer)) == ESP_OK;
+  auto error = i2c_master_write_to_device(
+    I2C_NUM_0, address, buffer, sizeof(buffer), I2C_TICKS_TO_WAIT);
+  return error == ESP_OK;
 }
 
 /*!
@@ -827,5 +830,7 @@ uint8_t Adafruit_BNO055::read8(adafruit_bno055_reg_t reg) {
 bool Adafruit_BNO055::readLen(adafruit_bno055_reg_t reg, uint8_t *buffer,
                               uint8_t len) {
   uint8_t reg_buf[1] = {(uint8_t)reg};
-  return read_register(address, reg, reg_buf, sizeof(reg_buf)) == ESP_OK;
+  auto error = i2c_master_write_read_device(
+    I2C_NUM_0, address, (uint8_t *)&reg, 1, reg_buf, sizeof(reg_buf), I2C_TICKS_TO_WAIT);
+  return error == ESP_OK;
 }
