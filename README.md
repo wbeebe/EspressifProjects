@@ -26,10 +26,11 @@ what MCU and developer board it targets.
 A project derived from an ESP-IDF LED flasher example that was considerably
 extended as an I2C learning laboratory.
 
-The project still uses the RGB LED as well as five I2C Adafruit devices:
+The project still uses the RGB LED as well as six additional I2C Adafruit devices:
 
 - a pair of LED alphanumeric displays
 - a pair of LED 8x16 matrix displays
+- an MCP23017 dual 8-bit port GPIO expander
 - a BNO055 IMU
 
 The project specifically targets the ESP32-C3-DevKitC-02 v1.1
@@ -37,6 +38,8 @@ The project specifically targets the ESP32-C3-DevKitC-02 v1.1
 
 A key feature of this development board is its use of RISC-V executing at 160MHz
 (https://riscv.org).
+
+Note that the version under the V5 folder is now in legacy mode and is using the legacy I2C driver. The version under the V5+ folder has been migrated to use the new I2C driver. All further work will occur in the V5+ version.
 
 ## ESP32-S3-N32R8
 
