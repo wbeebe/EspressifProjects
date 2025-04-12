@@ -42,6 +42,7 @@ The following Adafruit components are used in this application.
 | MCP23017 I2C GPIO Expander    | https://www.adafruit.com/product/5346 | 0x20 |
 | 9-DOF BNO055 breakout board   | https://www.adafruit.com/product/4646 | 0x28 |
 | 0.54" Quad Alphanumeric - Red | https://www.adafruit.com/product/3130 | 0x70 |
+| 0.54" Quad Alphanumeric - Red | https://www.adafruit.com/product/3130 | 0x71 |
 | 0.8" 8x16 LED Matrix - Red    | https://www.adafruit.com/product/3152 | 0x72 |
 | 0.8" 8x16 LED Matrix - Yellow | https://www.adafruit.com/product/3153 | 0x73 |
 
