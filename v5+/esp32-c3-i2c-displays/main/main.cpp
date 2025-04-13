@@ -26,6 +26,7 @@
 
 static const char *TAG = "ESP32-C3-I2C-DISPLAYS";
 
+// All I2C devices are on the same bus.
 AlphaNumeric alnum1 = AlphaNumeric(0x70);
 AlphaNumeric alnum2 = AlphaNumeric(0x71);
 Matrix8by16 m816 = Matrix8by16(0x72);
@@ -33,14 +34,9 @@ Matrix8by16 m816_2 = Matrix8by16(0x73);
 Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
 MCP23017 mcp23017 = MCP23017(MCP23017_DEFAULT_ADDRESS);
 
-// Sample clock. Counts one hour up to 59:59
-// then rolls over to 00:00.
+// Simple up counting clock. Starts at 00:00:00, counts up to 99:59:59,
+// then rolls over to 00:00:00.
 //
-int8_t ones{0},
-    tens{0},
-    hund{0},
-    thou{0};
-
 int8_t alpha_secs_1{0},
     alpha_secs_10{0},
     alpha_min_1{0},
@@ -48,7 +44,7 @@ int8_t alpha_secs_1{0},
     alpha_hour_1{0},
     alpha_hour_10{0};
 
-static void tick_clock(void) {
+static void clock_count_up(void) {
     if (++alpha_secs_1 > 9) { alpha_secs_1 = 0;
         if (++alpha_secs_10 > 5) { alpha_secs_10 = 0;
             if (++alpha_min_1 > 9) { alpha_min_1 = 0;
@@ -62,20 +58,28 @@ static void tick_clock(void) {
     }
 }
 
-static void clock_decrement(void) {
-    if (--ones < 0) { ones = 9;
-        if (--tens < 0) { tens = 5;
-            if (--hund < 0) { hund = 9;
-                if (--thou < 0) { thou = 5;}
+// Simple down counting clock. Starts at 59:59, counts down to 00:00,
+// then rolls over to 59:59.
+//
+int8_t one_seconds{0},
+    ten_seconds{0},
+    one_minutes{0},
+    ten_minutes{0};
+
+static void clock_count_down(void) {
+    if (--one_seconds < 0) { one_seconds = 9;
+        if (--ten_seconds < 0) { ten_seconds = 5;
+            if (--one_minutes < 0) { one_minutes = 9;
+                if (--ten_minutes < 0) { ten_minutes = 5;}
             }
         }
     }
 }
 
-// Everything to support blinking the NeoPixel LED.
+// Configure the NeoPixel LED.
 //
 static led_strip_handle_t led_strip;
-static void initialize_neo_pixel(void) {
+static void configure_neopixel(void) {
     led_strip_config_t strip_config = {
         .strip_gpio_num = GPIO_NUM_8,
         .max_leds = 1,
@@ -90,7 +94,7 @@ static void initialize_neo_pixel(void) {
     };
 
     ESP_ERROR_CHECK(led_strip_new_rmt_device(&strip_config, &rmt_config, &led_strip));
-    // Set NeoPixel LED dark by clearing all it individual LEDs.
+    // Set NeoPixel LED dark by clearing all individual LEDs.
     led_strip_clear(led_strip);
 }
 
@@ -110,16 +114,23 @@ const array<array<int, 3>, 7> colors {{
 uint8_t counter{0};
 
 static void cycle_devices(bool i2c_initialized) {
+    char tbuffer[8];
     for(auto color : colors) {
         led_strip_set_pixel(led_strip, 0, color[0], color[1], color[2]);
         led_strip_refresh(led_strip);
         vTaskDelay(1000 / portTICK_PERIOD_MS);
 
         if (i2c_initialized) {
-            clock_decrement();
-            m816.display(thou, hund);
-            m816_2.display(tens, ones);
-            tick_clock();
+            clock_count_down();
+            // This is a messy hack to display the BNO055's temperature.
+            // I'm using sprintf to convert the hexadecimal value to a decimal string,
+            // then removing the '0' value to get the decimal digits to display.
+            // It's only three lines of code, but still...
+            uint8_t farenheit = (bno055.getTemp()*9)/5 + 32;
+            sprintf(tbuffer, "%d", farenheit);
+            m816.display(int8_t(tbuffer[0] & 0x0F), int8_t(tbuffer[1] & 0x0F));
+            m816_2.display(ten_seconds, one_seconds);
+            clock_count_up();
             alnum1.display(alpha_min_10, alpha_min_1, alpha_secs_10, alpha_secs_1);
             alnum2.display(
                 counter & 1 ? '*' : '+',
@@ -160,7 +171,7 @@ static void display_eight_characters(uint8_t a, uint8_t b, uint8_t c, uint8_t d,
     vTaskDelay(2000 / portTICK_PERIOD_MS);
 }
 
-static void display_all_aphanumeric_characters(void) {
+static void test_aphanumeric_characters(void) {
     display_eight_characters('!','"','#','$','%','&','\'','(');
     display_eight_characters(')','*','+',',','-','.','/','(');
     display_eight_characters('0','1','2','3','4','5','6','7');
@@ -180,7 +191,7 @@ extern "C" void app_main(void) {
     ESP_LOGI(TAG, "Begin");
     ESP_LOGI(TAG, IDF_VER);
     ESP_LOGI(TAG, "LED Configure");
-    initialize_neo_pixel();
+    configure_neopixel();
     ESP_LOGI(TAG, "I2C Configure");
 
     bool i2c_initialized = (i2c_initialize() == ESP_OK);
@@ -216,7 +227,7 @@ extern "C" void app_main(void) {
                 alnum1.test() == ESP_OK and alnum2.test() == ESP_OK);
             vTaskDelay(2000 / portTICK_PERIOD_MS);
             ESP_LOGI(TAG, "Alphanumeric Display All Alphanumeric Characters");
-            display_all_aphanumeric_characters();
+            test_aphanumeric_characters();
             mcp23017.reset();
             m816.reset();
             m816_2.reset();
