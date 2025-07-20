@@ -14,6 +14,7 @@
 // I need to find a way to move all web page content out of the code body and
 // onto the flash, and open it like a regular data file.
 //
+// Testing SSID ESP32S3-6E78
 static std::string _SSID;
 static std::string _webpage;
 //
@@ -26,26 +27,30 @@ void webpage() {
     comma_format_number(nflash_size, flash_size);
     _webpage.clear();
     _webpage =
-"<!DOCTYPE html>"
 "<html>"
 "<head>"
 "<meta http-equiv=\"Content-type\" content=\"text/html;charset=utf-8\">"
 "<title>" + _SSID + "</title>"
 "<style>"
-"body { font-family: sans-serif; margin: 20px; }"
+"html {"
+"   font-family: sans-serif;"
+"   background-color: #FFFFFF;"
+"   display: inline-block;"
+"   margin: 20px;"
+"   }"
 "button {"
+"   font-size: 500%;"
 "   font-weight: normal;"
 "   display: inline-block;"
+"   margin: 5px;"
+"   padding: 20px 60px;"
 "   width: 99%;"
-"   border: none;"
-"   border-radius: 4px;"
-"   color: #ffffff;"
-"   padding: 16px 40px;"
-"   text-decoration: none;"
-"   font-size: 500%;"
-"   margin: 2px;"
+"   height: 150px;"
 "   justify-content: center;"
-"   align-items: center;"
+"   text-decoration: none;"
+"   color: #ffffff;"
+"   border: none;"
+"   border-radius: 15px;"
 "   outline: none;"
 "}"
 ".button-red { background-color: #DC143C; }"
@@ -53,7 +58,7 @@ void webpage() {
 ".button-blue { background-color: #4080E0; }"
 ".button-gray { background-color: #808080; }"
 ".button-off { background-color: #404040; }"
-"hr { border: 0;height: 2px;"
+"hr { border: 0; height: 2px;"
 "background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));}"
 "h1 { font-size: 500%; color: #D35F8D; text-align: center; }"
 "h2 { font-size: 250%; color: #5FA3D3; padding-left: 15px; }"
@@ -61,7 +66,6 @@ void webpage() {
 "</style>"
 "</head><body>"
 "<h1>" + _SSID + "</h1>"
-"<hr/>"
 "<form accept-charset=\"utf-8\" method=\"POST\">"
 "<button class='button-red'   name=\"RED\"   value=\"ON\">Red</button>"
 "<button class='button-green' name=\"GREEN\" value=\"ON\">Green</button>"
@@ -70,10 +74,10 @@ void webpage() {
 "<button class='button-gray'  name=\"CYCLE\" value=\"ON\">Cycle</button>"
 "</form>"
 "<hr/>"
+"<h2> " + get_time_now() + "</h2>"
 "<h2>Memory free: " + heap_size + " bytes<br/>"
 "Flash free: " + flash_size + " bytes<br/>"
-"ESP-IDF " + esp_get_idf_version() + "</h2>"
-"<h2> " + get_time_now() + "</h2>"
+"Built with ESP-IDF " + esp_get_idf_version() + "</h2>"
 "</body></html>";
 }
 
@@ -108,7 +112,7 @@ esp_err_t set_device_feature(httpd_req_t *req) {
         clear_neopixel();
     }
     else if (strcmp(buffer, "CYCLE=ON") == 0) {
-        color_cycle_neopixel();
+        color_blend_neopixel();
     }
 
     webpage();
@@ -143,6 +147,7 @@ static httpd_uri_t uri_post = {
 //
 //
 httpd_handle_t initialize_webserver(const std::string &SSID) {
+    ESP_LOGI(TAG, "INITIALIZE_WEBSERVER");
     _SSID = SSID;
     httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();

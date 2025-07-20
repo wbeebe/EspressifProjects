@@ -23,6 +23,12 @@
 // If you attempt to compile this file without creating your own version
 // then the compilation will fail.
 //
+// The settings.h file should have the following three lines:
+//
+// #pragma once
+// #define EXTERNAL_AP_SSID "YOUR_SSID"
+// #define EXTERNAL_AP_PWD "YOUR_PASSWORD"
+//
 #include "settings.h"
 
 static const char *TAG = "ESP32-S3-DevKitC-1.1-N32R8";
@@ -111,6 +117,7 @@ void wifi_event_handler (void *arg,
 // not have the esp_ prefix will emit deprecation warning errors.
 //
 void initialize_sntp() {
+    ESP_LOGI(TAG, "INITIALIZE_SNTP");
     esp_sntp_config_t config = ESP_NETIF_SNTP_DEFAULT_CONFIG("pool.ntp.org");
     esp_netif_sntp_init(&config);
 
@@ -128,6 +135,7 @@ void initialize_sntp() {
 // Initialize WiFi.
 //
 esp_err_t initialize_wifi_station(const char *SSID) {
+    ESP_LOGI(TAG, "INITIALIZE_WIFI_STATION");
     ESP_LOGI(TAG, "WIFI CREATE EVENT GROUP");
     wifi_event_group = xEventGroupCreate();
     //

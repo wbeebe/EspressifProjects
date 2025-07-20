@@ -20,6 +20,7 @@
 // Display selective chip information on the console.
 //
 void chip_information(string &return_SSID) {
+    ESP_LOGI(TAG, "CHIP_INFORMATION");
     //
     // First gather all the information we want to display.
     //
