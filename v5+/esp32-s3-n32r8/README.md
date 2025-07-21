@@ -5,7 +5,7 @@
 
 ## Hardware Used
 
-* A specific development board with an ESP32-S3-WROOOM-2 SoC, the ESP32-S3-DevKitC-1-N32R32. This board has 8 MB PSRAM and 32 MB FLASH.
+* A specific development board with an ESP32-S3-WROOOM-2 SoC, the ESP32-S3-DevKitC-1-N32R8. This board has 8 MB PSRAM and 32 MB FLASH.
 * A micro USB cable for power, programming and command line communications.
     - **Make sure the USB cable supports both data and power.**
 
@@ -13,20 +13,20 @@ The development board used in this application has an addressable LED:
 
 | Board                    | LED type      | Pin      |
 | ------------------------ | ------------- | -------- |
-| ESP32-S3-DevKitC-1-N8R32 | Addressable   | GPIO38   |
+| ESP32-S3-DevKitC-1-N32R8 | Addressable   | GPIO38   |
 
 See [Development Boards](https://www.espressif.com/en/products/devkits)
 for more information about it.
 
 ## ESP-IDF Toolchain Version
 
-This project uses ESP-IDF version 5.4.2 in order to enable all the flash and memory available on the ESP32-S3-DevKitC-1-N8R32.
+This project uses ESP-IDF version 5.4.2 in order to enable all the flash and memory available on the ESP32-S3-DevKitC-1-N32R8.
 
 ## Configuration
 
 Set the correct chip target using `idf.py set-target esp32s3`.
 
-The ESP32-S3-DevKitC-1-N32R32 comes with an ESP32-S3-WROOM-2 SOC, 32 MB (N32) of flash and 8 MB (R8) of external RAM. Use `idf.py menuconfig` to configure specific properties of the DevKit board to select how much external RAM and FLASH.
+The ESP32-S3-DevKitC-1-N32R8 comes with an ESP32-S3-WROOM-2 SOC, 32 MB (N32) of flash and 8 MB (R8) of external RAM. Use `idf.py menuconfig` to configure specific properties of the DevKit board to select how much external RAM and FLASH.
 
 Set the amount of flash from the default of 2 GB to 32 GB. 
 1. At the top-level of menuconfig select Serial flasher config; 
