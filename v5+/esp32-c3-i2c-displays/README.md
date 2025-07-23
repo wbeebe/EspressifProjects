@@ -6,7 +6,7 @@ i.e. [WS2812](http://www.world-semi.com/Certifications/WS2812B.html), and
 * how to address the Adafruit BNO055 original breakout board.
 
 The software is updated to use the new i2c driver, instead of the legacy i2c driver.
-The software is built with ESP-IDF version 5.4.1.
+The software is built with ESP-IDF version 5.5.
 
 ## How to Use This Application
 ### Hardware Required
