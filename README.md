@@ -41,7 +41,7 @@ A key feature of this development board is its use of RISC-V executing at 160MHz
 
 Note that the version under the V5 folder is now in legacy mode and is using the legacy I2C driver. The version under the V5+ folder has been migrated to use the new I2C driver. All further work will occur in the V5+ version.
 
-## ESP32-S3-N32R8
+## ESP32-Webserver-SNTP
 
 A project with a built-in Web server that manipulates the built-in NeoPixel. It
 also enbles full flash (8 MiB) and PSRAM (32 MiB). This is available in the v5+
