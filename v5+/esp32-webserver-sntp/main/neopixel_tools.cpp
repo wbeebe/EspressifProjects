@@ -103,5 +103,5 @@ void color_blend_neopixel() {
     }
 
     led_strip_clear(led_strip);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    //vTaskDelay(1000 / portTICK_PERIOD_MS);
 }
