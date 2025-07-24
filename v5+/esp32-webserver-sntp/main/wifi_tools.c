@@ -27,6 +27,7 @@
 #include <lwip/ip4_addr.h>
 #include <lwip/err.h>
 
+#include "common.h"
 #include "wifi_tools.h"
 //
 // settings.h contains the EXTERNAL_AP_SSID and EXTERNAL_AP_PWD
@@ -46,7 +47,7 @@
 //
 #include "settings.h"
 
-static const char *TAG = "ESP32-S3-DevKitC-1.1-N32R8";
+//static const char *TAG = "ESP32-S3-DevKitC-1.1-N32R8";
 
 // FreeRTOS event group to signal when we're connected.
 //
@@ -80,6 +81,8 @@ void wifi_event_handler (void *arg,
             case WIFI_EVENT_STA_DISCONNECTED:
                 ESP_LOGI(TAG, stringify(WIFI_EVENT_STA_DISCONNECTED));
                 if (connect_retry_count < MAXIMUM_RETRY_COUNT) {
+                    ESP_LOGI(TAG, "WIFI RECONNECT ATTEMPT DELAY");
+                    vTaskDelay(5000 / portTICK_PERIOD_MS);
                     ESP_LOGI(TAG, "WIFI RECONNECT ATTEMPT %i", ++connect_retry_count);
                     esp_wifi_connect();
                 }
@@ -235,6 +238,7 @@ esp_err_t initialize_wifi_station(const char *SSID) {
 // a stand-alone access point. I've done this with MicroPython, but can't
 // seem (so far) to do this within the ESP-IDF framework.
 //
+/*
 void set_static_ip(esp_netif_t *netif) {
     if (esp_netif_dhcpc_stop(netif) != ESP_OK) {
         ESP_LOGE(TAG, "WIFI FAILED TO STOP DHCP CLIENT");
@@ -252,3 +256,4 @@ void set_static_ip(esp_netif_t *netif) {
         return;
     }
 }
+*/

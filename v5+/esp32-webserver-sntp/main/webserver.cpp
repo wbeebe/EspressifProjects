@@ -19,6 +19,7 @@
 #include <esp_mac.h>
 #include <esp_flash.h>
 
+#include "common.h"
 #include "webserver.hpp"
 #include "neopixel_tools.hpp"
 #include "utilities.hpp"

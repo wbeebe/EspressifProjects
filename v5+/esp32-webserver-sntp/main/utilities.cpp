@@ -17,6 +17,7 @@
 #include <esp_sntp.h>
 #include <esp_netif_sntp.h>
 
+#include "common.h"
 #include "utilities.hpp"
 //
 // The things I have to do to format numbers with commas.

@@ -19,6 +19,7 @@
 #include <esp_flash.h>
 #include <nvs_flash.h>
 
+#include "common.h"
 #include "chip_decode.hpp"
 #include "neopixel_tools.hpp"
 #include "webserver.hpp"
