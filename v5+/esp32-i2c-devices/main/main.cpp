@@ -24,7 +24,7 @@
 #include "Adafruit_BNO055.hpp"
 #include "mcp23017.hpp"
 
-static const char *TAG = "ESP32-C3-I2C-DISPLAYS";
+static const char *TAG = "ESP32-I2C-DEVICES";
 
 // All I2C devices are on the same bus.
 AlphaNumeric alnum1 = AlphaNumeric(0x70);
@@ -35,7 +35,7 @@ Adafruit_BNO055 bno055 = Adafruit_BNO055(0x28);
 MCP23017 mcp23017 = MCP23017(MCP23017_DEFAULT_ADDRESS);
 
 // Simple up counting clock. Starts at 00:00:00, counts up to 99:59:59,
-// then rolls over to 00:00:00.
+// then rolls back over to 00:00:00.
 //
 int8_t alpha_secs_1{0},
     alpha_secs_10{0},
@@ -59,7 +59,7 @@ static void clock_count_up(void) {
 }
 
 // Simple down counting clock. Starts at 59:59, counts down to 00:00,
-// then rolls over to 59:59.
+// then rolls back over to 59:59.
 //
 int8_t one_seconds{0},
     ten_seconds{0},
@@ -113,7 +113,7 @@ const array<array<int, 3>, 7> colors {{
 
 uint8_t counter{0};
 
-static void cycle_devices(bool i2c_initialized) {
+static void cycle_devices(bool i2c_initialized, bool bno055_healthy) {
     char tbuffer[8];
     for(auto color : colors) {
         led_strip_set_pixel(led_strip, 0, color[0], color[1], color[2]);
@@ -126,7 +126,10 @@ static void cycle_devices(bool i2c_initialized) {
             // I'm using sprintf to convert the hexadecimal value to a decimal string,
             // then removing the '0' value to get the decimal digits to display.
             // It's only three lines of code, but still...
-            uint8_t farenheit = (bno055.getTemp()*9)/5 + 32;
+            uint8_t farenheit{0};
+            if (bno055_healthy) {
+                farenheit = (bno055.getTemp()*9)/5 + 32;
+            }
             sprintf(tbuffer, "%d", farenheit);
             m816.display(int8_t(tbuffer[0] & 0x0F), int8_t(tbuffer[1] & 0x0F));
             m816_2.display(ten_seconds, one_seconds);
@@ -142,7 +145,7 @@ static void cycle_devices(bool i2c_initialized) {
     }
 }
 
-static void check_bno055_health() {
+static bool check_bno055_health() {
     if (bno055.begin()) {
         ESP_LOGI(TAG, "BNO055 BEGIN");
         adafruit_bno055_rev_info_t info;
@@ -159,13 +162,17 @@ static void check_bno055_health() {
         ESP_LOGI(TAG,"Self Test Result %02X", self_test_result);
         ESP_LOGI(TAG,"    System Error %02X", system_error);
         ESP_LOGI(TAG,"Test Temperature %d", bno055.getTemp());
+        return true;
     }
     else {
         ESP_LOGI(TAG, "BNO055 Startup FAILED.");
+        return false;
     }
 }
 
-static void display_eight_characters(uint8_t a, uint8_t b, uint8_t c, uint8_t d, uint8_t e, uint8_t f, uint8_t g, uint8_t h) {
+static void display_eight_characters(
+    uint8_t a, uint8_t b, uint8_t c, uint8_t d,
+    uint8_t e, uint8_t f, uint8_t g, uint8_t h) {
     alnum2.display(a, b, c, d);
     alnum1.display(e, f, g, h);
     vTaskDelay(2000 / portTICK_PERIOD_MS);
@@ -188,6 +195,7 @@ static void test_aphanumeric_characters(void) {
 }
 
 extern "C" void app_main(void) {
+    bool bno055_health{false};
     ESP_LOGI(TAG, "Begin");
     ESP_LOGI(TAG, IDF_VER);
     ESP_LOGI(TAG, "LED Configure");
@@ -202,7 +210,7 @@ extern "C" void app_main(void) {
         ESP_LOGI(TAG, "I2C Device Scan.");
         i2c_scan();
 
-        check_bno055_health();
+        bno055_health = check_bno055_health();
 
         if (mcp23017.initialize() == ESP_OK) {
             ESP_LOGI(TAG, "MCP23017 Initialization SUCCESS");
@@ -253,6 +261,6 @@ extern "C" void app_main(void) {
     ESP_LOGI(TAG, "Start cycling...");
 
     while (true) {
-        cycle_devices(i2c_initialized);
+        cycle_devices(i2c_initialized, bno055_health);
     }
 }

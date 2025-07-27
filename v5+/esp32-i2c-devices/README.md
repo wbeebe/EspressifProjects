@@ -5,7 +5,7 @@ i.e. [WS2812](http://www.world-semi.com/Certifications/WS2812B.html), and
 * how to address Adafruit LED I2C displays attached via the I2C buss, and
 * how to address the Adafruit BNO055 original breakout board.
 
-The software is updated to use the new i2c driver, instead of the legacy i2c driver.
+The software is updated to use the new Espressif i2c driver, instead of the legacy i2c driver.
 The software is built with ESP-IDF version 5.5.
 
 ## How to Use This Application
@@ -83,19 +83,8 @@ Note: The LED color order is red, blue, green, cyan, magenta, yellow, and black.
 The pixel number indicates the pixel position in the LED strip. For a single LED, use 0.
 
 ```
-I (285) main_task: Calling app_main()
-I (285) ESP32-C3-I2C-DISPLAYS: Begin
-I (285) ESP-ROM:esp32c3-api1-20210207
-Build:Feb  7 2021
-rst:0x1 (POWERON),boot:0xc (SPI_FAST_FLASH_BOOT)
-SPIWP:0xee
-mode:DIO, clock div:1
-load:0x3fcd5820,len:0x1574
-load:0x403cc710,len:0xc30
-load:0x403ce710,len:0x2f64
-entry 0x403cc71a
-I (30) boot: ESP-IDF v5.4.1 2nd stage bootloader
-I (30) boot: compile time Apr  7 2025 20:43:08
+I (30) boot: ESP-IDF v5.5 2nd stage bootloader
+I (30) boot: compile time Jul 24 2025 15:44:21
 I (30) boot: chip revision: v0.3
 I (30) boot: efuse block revision: v1.1
 I (34) boot.esp32c3: SPI Speed      : 80MHz
@@ -104,46 +93,46 @@ I (41) boot.esp32c3: SPI Flash Size : 4MB
 I (45) boot: Enabling RNG early entropy source...
 I (50) boot: Partition Table:
 I (52) boot: ## Label            Usage          Type ST Offset   Length
-I (59) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (58) boot:  0 nvs              WiFi data        01 02 00009000 00006000
 I (65) boot:  1 phy_init         RF data          01 01 0000f000 00001000
 I (72) boot:  2 factory          factory app      00 00 00010000 00100000
 I (78) boot: End of partition table
-I (81) esp_image: segment 0: paddr=00010020 vaddr=3c020020 size=0c198h ( 49560) map
-I (97) esp_image: segment 1: paddr=0001c1c0 vaddr=3fc8ce00 size=015dch (  5596) load
-I (98) esp_image: segment 2: paddr=0001d7a4 vaddr=40380000 size=02874h ( 10356) load
-I (106) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=1de80h (122496) map
-I (131) esp_image: segment 4: paddr=0003dea8 vaddr=40382874 size=0a3d0h ( 41936) load
-I (139) esp_image: segment 5: paddr=00048280 vaddr=50000200 size=0001ch (    28) load
-I (143) boot: Loaded app from partition at offset 0x10000
-I (143) boot: Disabling RNG early entropy source...
-I (156) cpu_start: Unicore app
-I (164) cpu_start: Pro cpu start user code
-I (165) cpu_start: cpu freq: 160000000 Hz
-I (165) app_init: Application information:
-I (167) app_init: Project name:     esp32-c3-i2c-displays
-I (172) app_init: App version:      1
-I (177) app_init: Compile time:     Apr 11 2025 21:00:47
-I (183) app_init: ELF file SHA256:  f779b93ac6f2ea64...
-I (188) app_init: ESP-IDF:          v5.4.1
-I (193) efuse_init: Min chip rev:     v0.3
-I (198) efuse_init: Max chip rev:     v1.99 
-I (203) efuse_init: Chip rev:         v0.3
-I (208) heap_init: Initializing. RAM available for dynamic allocation:
-I (215) heap_init: At 3FC8F560 len 00030AA0 (194 KiB): RAM
-I (221) heap_init: At 3FCC0000 len 0001C710 (113 KiB): Retention RAM
-I (228) heap_init: At 3FCDC710 len 00002950 (10 KiB): Retention RAM
-I (235) heap_init: At 5000021C len 00001DCC (7 KiB): RTCRAM
-I (242) spi_flash: detected chip: generic
-I (246) spi_flash: flash io: dio
-I (250) sleep_gpio: Configure to isolate all GPIO pins in sleep state
-I (257) sleep_gpio: Enable automatic switching of GPIO sleep configuration
-I (265) main_task: Started on CPU0
-I (285) main_task: Calling app_main()
-I (285) ESP32-C3-I2C-DISPLAYS: Begin
-I (285) ESP32-C3-I2C-DISPLAYS: v5.4.1
-I (285) ESP32-C3-I2C-DISPLAYS: LED Configure
-I (295) ESP32-C3-I2C-DISPLAYS: I2C Configure
-I (295) ESP32-C3-I2C-DISPLAYS: I2C Device Scan.
+I (81) esp_image: segment 0: paddr=00010020 vaddr=3c030020 size=0c828h ( 51240) map
+I (97) esp_image: segment 1: paddr=0001c850 vaddr=3fc8d200 size=016c8h (  5832) load
+I (98) esp_image: segment 2: paddr=0001df20 vaddr=40380000 size=020f8h (  8440) load
+I (105) esp_image: segment 3: paddr=00020020 vaddr=42000020 size=20b38h (133944) map
+I (132) esp_image: segment 4: paddr=00040b60 vaddr=403820f8 size=0afbch ( 44988) load
+I (141) esp_image: segment 5: paddr=0004bb24 vaddr=50000000 size=00020h (    32) load
+I (145) boot: Loaded app from partition at offset 0x10000
+I (145) boot: Disabling RNG early entropy source...
+I (158) cpu_start: Unicore app
+I (167) cpu_start: Pro cpu start user code
+I (167) cpu_start: cpu freq: 160000000 Hz
+I (167) app_init: Application information:
+I (170) app_init: Project name:     esp32-c3-i2c-displays
+I (176) app_init: App version:      b8040fc-dirty
+I (181) app_init: Compile time:     Jul 24 2025 15:44:10
+I (187) app_init: ELF file SHA256:  61bbf42f7eff05ca...
+I (193) app_init: ESP-IDF:          v5.5
+I (198) efuse_init: Min chip rev:     v0.3
+I (202) efuse_init: Max chip rev:     v1.99 
+I (207) efuse_init: Chip rev:         v0.3
+I (212) heap_init: Initializing. RAM available for dynamic allocation:
+I (220) heap_init: At 3FC8FA60 len 000305A0 (193 KiB): RAM
+I (226) heap_init: At 3FCC0000 len 0001C710 (113 KiB): Retention RAM
+I (233) heap_init: At 3FCDC710 len 00002950 (10 KiB): Retention RAM
+I (240) heap_init: At 50000020 len 00001FC8 (7 KiB): RTCRAM
+I (247) spi_flash: detected chip: generic
+I (250) spi_flash: flash io: dio
+I (255) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (262) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (269) main_task: Started on CPU0
+I (289) main_task: Calling app_main()
+I (289) ESP32-I2C-DEVICES: Begin
+I (289) ESP32-I2C-DEVICES: v5.5
+I (289) ESP32-I2C-DEVICES: LED Configure
+I (299) ESP32-I2C-DEVICES: I2C Configure
+I (299) ESP32-I2C-DEVICES: I2C Device Scan.
      0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F
 00: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
@@ -153,24 +142,25 @@ I (295) ESP32-C3-I2C-DISPLAYS: I2C Device Scan.
 50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
 70: 70 71 72 73 -- -- -- -- -- -- -- -- -- -- -- -- 
-I (3615) BNO055: CHECK TO SEE IF BNO055 COMES OUT OF SOFTWARE RESET
-I (3735) ESP32-C3-I2C-DISPLAYS: BNO055 BEGIN.
-I (3735) ESP32-C3-I2C-DISPLAYS: Acceleration Rev 251
-I (3735) ESP32-C3-I2C-DISPLAYS: Magnitometer Rev 50
-I (3735) ESP32-C3-I2C-DISPLAYS:    Gyroscope Rev 15
-I (3745) ESP32-C3-I2C-DISPLAYS:           SW Rev 785
-I (3745) ESP32-C3-I2C-DISPLAYS:   Bootloader Rev 21
-I (3955) ESP32-C3-I2C-DISPLAYS:    System Status 05
-I (3955) ESP32-C3-I2C-DISPLAYS: Self Test Result 0F
-I (3955) ESP32-C3-I2C-DISPLAYS:     System Error 00
-I (3955) ESP32-C3-I2C-DISPLAYS: MCP23017 Initialization SUCCESS
-I (3965) ESP32-C3-I2C-DISPLAYS: MCP23017 Reset SUCCESS
-I (3965) ESP32-C3-I2C-DISPLAYS: MCP23017 Test SUCCESS
-I (3975) ESP32-C3-I2C-DISPLAYS: Alphanumeric Initialization SUCCESS
-I (5985) ESP32-C3-I2C-DISPLAYS: Alphanumeric Display All Alphanumeric Characters
-I (31985) ESP32-C3-I2C-DISPLAYS: Matrix 8x16 Show All Glyphs
-I (43995) ESP32-C3-I2C-DISPLAYS: Alphanumeric Testing FINISHED
-I (43995) ESP32-C3-I2C-DISPLAYS: Start cycling...
+I (3619) BNO055: CHECK TO SEE IF BNO055 COMES OUT OF SOFTWARE RESET
+I (3739) ESP32-I2C-DEVICES: BNO055 BEGIN
+I (3739) ESP32-I2C-DEVICES: Acceleration Rev 251
+I (3739) ESP32-I2C-DEVICES: Magnitometer Rev 50
+I (3739) ESP32-I2C-DEVICES:    Gyroscope Rev 15
+I (3739) ESP32-I2C-DEVICES:           SW Rev 785
+I (3749) ESP32-I2C-DEVICES:   Bootloader Rev 21
+I (3959) ESP32-I2C-DEVICES:    System Status 05
+I (3959) ESP32-I2C-DEVICES: Self Test Result 0F
+I (3959) ESP32-I2C-DEVICES:     System Error 00
+I (3959) ESP32-I2C-DEVICES: Test Temperature 24
+I (3969) ESP32-I2C-DEVICES: MCP23017 Initialization SUCCESS
+I (3969) ESP32-I2C-DEVICES: MCP23017 Reset SUCCESS
+I (3979) ESP32-I2C-DEVICES: MCP23017 Test SUCCESS
+I (3989) ESP32-I2C-DEVICES: Alphanumeric Initialization SUCCESS
+I (5999) ESP32-I2C-DEVICES: Alphanumeric Display All Alphanumeric Characters
+I (31999) ESP32-I2C-DEVICES: Matrix 8x16 Show All Glyphs
+I (44009) ESP32-I2C-DEVICES: Alphanumeric Testing FINISHED
+I (44009) ESP32-I2C-DEVICES: Start cycling...
 ```
 
 ## Troubleshooting
