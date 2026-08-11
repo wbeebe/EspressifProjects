@@ -4,16 +4,16 @@ A collection of projects I've re/written over time for programming Espressif
 MCUs. Languages used are C/C++ and MicroPython.
 
 - For C/C++ programming I've used the ESP-IDF development tools
-  v5.4.2(https://github.com/espressif/esp-idf) on Linux Mint 22.1.
-- For MicroPython I've used version 1.26.0 pre-release
+  v5.5.5(https://github.com/espressif/esp-idf) on Linux Mint 22.3.
+- For MicroPython I've used version 1.29.0 pre-release
   (https://github.com/micropython/micropython)
 
-These projects are current as of July 2025.
+These projects are current as of August 2026.
 
 There are now three ESP-IDF folders, v4 for ESP-IDF 4.x, v5 and v5+ for ESP-IDF
-v5.x. All new work is on the v5 and v5+ branches. The v4 is left for historical
-purposes. The important feature on the v5/v5+ branches is the enabling of
-SPIRAM on those ESP32-S3 development boards that have octal SPIRAM.
+v5.x. All new work is on the v5+ branch. The v4 is left for historical
+purposes. The important feature on the v5+ branch is the enabling of
+SPIRAM on those ESP32 development boards that have octal SPIRAM.
 
 NOTE: Only ESP-IDF projects are bifurcated down the three branches. All
 MicroPython projects are at this level.
@@ -42,15 +42,14 @@ A key feature of this development board is its use of RISC-V executing at 160MHz
 Note that the version under the V5 folder is now in legacy mode and is using the legacy I2C driver. The version under the V5+ folder has been migrated to use the new I2C driver. All further work will occur in the V5+ version.
 
 ## ESP32-Webserver-SNTP
+## ESP32C5-Webserver-SNTP
 
-A project with a built-in Web server that manipulates the built-in NeoPixel. It
-also enbles full flash (8 MiB) and PSRAM (32 MiB). This is available in the v5+
+Two projects with built-in Web servers that manipulate their built-in NeoPixel. It
+also enbles full flash and PSRAM on each board. This is available in the v5+
 folder. The version in the v5+ folder is a re-write of an earlier version in the
 v5 folder.
 
 _DO NOT USE THE VERSION IN THE V5 FOLDER!_
-
-The on-board NeoPixel LED is controlled via GPIO38.
 
 ## Dual-Blink
 
@@ -87,7 +86,7 @@ be emitted at the start of a colour cycle.
 
 <a rel="me" href="https://mastodon.cloud/@wbeebe">Mastodon</a>
 
-    Copyright 2025 William H. Beebe, Jr.
+    Copyright 2026 William H. Beebe, Jr.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
