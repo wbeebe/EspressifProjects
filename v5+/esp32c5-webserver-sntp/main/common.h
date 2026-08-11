@@ -15,4 +15,4 @@
  */
  #pragma once
 
- static const char *TAG = "ESP32-S3-WEBSERVER-SNTP";
+ static const char *TAG = "ESP32-C5-WEBSERVER-SNTP";

@@ -94,7 +94,7 @@ void regenerate_webpage() {
 ".button-blue-off { color: #4080E0; border: 10px solid; background-color: #FFFFFF; }"
 ".button-gray { background-color: #808080; }"
 ".button-off { background-color: #404040; }"
-"h1 { font-size: 500%; color: #D35F8D; text-align: center; margin-top: 5px; margin-bottom: 5px; }"
+"h1 { font-size: 500%; color: #D35F8D; text-align: center; margin-top: 10px; margin-bottom: 10px; }"
 "h2 { font-size: 300%; color: #5FA3D3; padding-left: 15px; }"
 "<link rel=\"icon\" href=\"data:,\">"
 "</style>"

@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- #pragma once
+#pragma once
 
- static const char *TAG = "ESP32-S3-WEBSERVER-SNTP";
+#include <esp_http_server.h>
+#include "utilities.hpp"
+
+httpd_handle_t initialize_webserver(const std::string &SSID);

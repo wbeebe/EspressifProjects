@@ -8,3 +8,4 @@ build
 **/dependencies.lock
 **/cmake-build-debug
 settings.h
+v6

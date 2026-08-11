@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- #pragma once
+#pragma once
 
- static const char *TAG = "ESP32-S3-WEBSERVER-SNTP";
+#define stringify( _name ) #_name
+esp_err_t initialize_wifi_station(const char *SSID);

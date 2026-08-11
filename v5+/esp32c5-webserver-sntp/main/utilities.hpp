@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- #pragma once
+#pragma once
+#include <string>
 
- static const char *TAG = "ESP32-S3-WEBSERVER-SNTP";
+void comma_format_number(uint32_t value, std::string &results);
+const char *get_time_now();
+void print_time();

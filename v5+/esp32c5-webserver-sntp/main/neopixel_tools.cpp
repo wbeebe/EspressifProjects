@@ -17,7 +17,7 @@
 #include "neopixel_tools.hpp"
 using std::array;
 
-typedef enum Colors {
+enum Colors {
     BLACK,
     RED,
     GREEN,
@@ -25,7 +25,7 @@ typedef enum Colors {
     CYAN,
     MAGENTA,
     YELLOW,
-} colors_t;
+};
 
 // Create an array of color arrays to cycle through continuously.
 //
